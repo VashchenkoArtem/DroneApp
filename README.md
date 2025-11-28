@@ -10,13 +10,16 @@
 
 Ми обрали саме цей проєкт, бо він ідеально підходить для практики з React, TypeScript, які ми нещодавно вивчили.
 
-
 ## Склад команди | Team members | Developers
 
 - [Ващенко Артем](https://github.com/VashchenkoArtem)  |  [Vashchenko Artem - Teamlead](https://github.com/VashchenkoArtem)
 - [Коцаба Анастасія](https://github.com/AnastasiiaKotsaba)  |  [Kotsaba Anastasiia](https://github.com/AnastasiiaKotsaba)
 - [Харлан Кирило](https://github.com/KirillKharlan)  |  [Kharlan Kyrylo](https://github.com/KirillKharlan)
 
+## Стиль написання коду | Style of code writing
+
+- В нашому проєкті ми використовуємо слоїсту архітектуру. Слоїста архітектура - підхід, завдяки якому увесь код ділиться на декілька логічних блоків. Наприклад: post.service.ts, tag.controller.ts |
+- In our project we use layered architecture. Layered architecture is an approach where all the code is divided into several logical blocks. For example: post.service.ts, tag.controller.ts
 
 ## Використані технології | Tehnologies used
   - *TypeScript* - це JavaScript з додаванням статичної типізації. Він дозволяє знаходити помилки на етапі розробки, роблячи великі проєкти надійнішими.
@@ -30,7 +33,27 @@
 
 ## Архітектура проєкту | Project architecture
   - *src* - Створення та налаштування додатків | Creating application and settings 
+    <details>
+      <summary><strong>main</strong></summary>
+    </details>
+    <details>
+      <summary><strong>catalog</strong></summary>
+    </details>
+    <details>
+      <summary><strong>order</strong></summary>
+    </details>
+    <details>
+      <summary><strong>contacts</strong></summary>
+    </details>
+    <details>
+      <summary><strong>about us</strong></summary>
+    </details>
+    <details>
+      <summary><strong>product</strong></summary>
+    </details>
+    <details>
+      <summary><strong>profile</strong></summary>
+    </details>
   - *prisma* - Робота з БД | Work with data base
   - *.gitignore*- Файли, які не додаються в commit | Files that are not attached to commit
   - *package-lock.json* і *package.json* - Налаштування проєкту | Project settings
-
