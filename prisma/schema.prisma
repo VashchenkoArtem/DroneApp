@@ -5,10 +5,72 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id Int @id @unique @default(autoincrement())
+  firstName String
+  patronMik String
+  lastName String
+  email String @unique
+  password String
+  birthDate DateTime
+  phoneNumber String
+}
+
+model Delivery {
+  id Int @id @unique @default(autoincrement())
+  firstName String
+  patronMik String
+  lastName String
+  phoneNumber String
+  email String
+  city String
+}
+
+model Product {
+  id Int @id @unique @default(autoincrement())
+  name String
+  price Int
+  discount Int
+  image String
+  description String
+  count Int
+}
+
+model Order{
+  id Int @id @unique @default(autoincrement())
+  firstName String
+  patronMik String
+  phoneNumber String
+  email String
+  comment String
+  cityName String
+  paymentMethod String
+}
+
+model ProductSpecifications {
+  id Int @id @unique @default(autoincrement())
+  title String
+  description String
+  codeType String
+  characteristic1 String
+  characteristic2 String
+  characteristic3 String
+}
+
+model ProductBlock {
+  id Int @id @unique @default(autoincrement())
+  title String
+  description String
+  blockAlign String
+  image String
+  blockOrder Int
 }

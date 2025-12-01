@@ -4,15 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx ts-node src/server.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.13.0",
     "@types/express": "^5.0.5",
     "@types/typescript": "^0.4.29",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "prisma": "^7.0.0",
+    "prisma": "^5.13.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
 }
