@@ -1,10 +1,14 @@
 # Project "Drones online store" | Проєкт "Онлайн магазин дронів"
 
 ## Навігація
-- [Мета проєкту | The purpose of the project](#мета-створення-проєкту--purpose-of-the-project)
-- [Склад команди | Team members](#склад-команди--team-members--developers)
-- [Технології | Technology](#використані-технології--tehnologies-used)
-- [Архітектура проєкту | Project architecture](#архітектура-проєкту--project-architecture)
+- [Project "Drones online store" | Проєкт "Онлайн магазин дронів"](#project-drones-online-store--проєкт-онлайн-магазин-дронів)
+  - [Навігація](#навігація)
+  - [Мета створення проєкту | Purpose of the Project](#мета-створення-проєкту--purpose-of-the-project)
+  - [Склад команди | Team members | Developers](#склад-команди--team-members--developers)
+  - [Стиль написання коду | Style of code writing](#стиль-написання-коду--style-of-code-writing)
+  - [Використані технології | Tehnologies used](#використані-технології--tehnologies-used)
+  - [Архітектура проєкту | Project architecture](#архітектура-проєкту--project-architecture)
+  - [Використані статус-коди | Used status-codes](#використані-статус-коди--used-status-codes)
 
 ## Мета створення проєкту | Purpose of the Project
 
@@ -57,3 +61,21 @@
   - *prisma* - Робота з БД | Work with data base
   - *.gitignore*- Файли, які не додаються в commit | Files that are not attached to commit
   - *package-lock.json* і *package.json* - Налаштування проєкту | Project settings
+
+
+## Використані статус-коди | Used status-codes
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Ok \| Успіх |
+  | 201 | Succes create \| Успішно створено |
+  | 204 | Empty \| Порожньо |
+  | --- | --- |
+  | 400 | Incorrect request \| Некоректий запит |
+  | 401 | Not authorized \| Не авторизований |
+  | 402 | Payment required \| Потрібна оплата |
+  | 403 | Forbidden \| Заборонено |
+  | 404 | Not found \| Не знайдено |
+  | 410 | Deleted \| Видалено |
+  | --- | --- |
+  | 500 | Server error \| Внутрішня помилка сервера |
+  | 507 | Storage full \| Сховище заповнено |
