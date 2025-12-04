@@ -56,7 +56,15 @@
       <summary><strong>Products</strong></summary>
     </details>
     <details>
-      <summary><strong>profile</strong></summary>
+      <summary><strong>profile
+        <ol>
+          <li>products.types.ts</li>
+          <li>products.router.ts</li>
+          <li>products.controller.ts</li>
+          <li>products.service.ts</li>
+          <li>products.repository.ts</li>
+        </ol>
+      </strong></summary>
     </details>
   - *prisma* - Робота з БД | Work with data base
   - *.gitignore*- Файли, які не додаються в commit | Files that are not attached to commit
