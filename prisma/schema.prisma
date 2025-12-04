@@ -23,6 +23,7 @@ model User {
   password String
   birthDate DateTime
   phoneNumber String
+  deliveries Delivery?
 }
 
 model Delivery {
@@ -33,6 +34,8 @@ model Delivery {
   phoneNumber String
   email String
   city String
+  user User @relation(fields: [authorId], references: [id])
+  authorId Int @unique
 }
 
 model Product {
@@ -43,8 +46,27 @@ model Product {
   image String
   description String
   count Int
+  blocks ProductBlock[]
+  orders ProductOnOrder[]
+  specifications ProductSpecifications?
 }
-
+model ProductBlock {
+  id Int @id @unique @default(autoincrement())
+  title String
+  description String
+  blockAlign String
+  image String
+  blockOrder Int   
+  product Product @relation(fields: [blockId], references: [id])
+  blockId Int @unique
+}
+model ProductOnOrder{
+  id Int @id @unique @default(autoincrement())
+  product Product @relation(fields: [productId], references: [id])
+  productId Int @unique
+  order Order @relation(fields: [orderId], references: [id])
+  orderId Int @unique
+}
 model Order{
   id Int @id @unique @default(autoincrement())
   firstName String
@@ -54,6 +76,7 @@ model Order{
   comment String
   cityName String
   paymentMethod String
+  products ProductOnOrder[]
 }
 
 model ProductSpecifications {
@@ -64,13 +87,7 @@ model ProductSpecifications {
   characteristic1 String
   characteristic2 String
   characteristic3 String
+  product Product @relation(fields: [productId], references: [id])
+  productId Int @unique
 }
 
-model ProductBlock {
-  id Int @id @unique @default(autoincrement())
-  title String
-  description String
-  blockAlign String
-  image String
-  blockOrder Int
-}
