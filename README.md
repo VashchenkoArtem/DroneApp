@@ -53,7 +53,7 @@
       <summary><strong>about us</strong></summary>
     </details>
     <details>
-      <summary><strong>product</strong></summary>
+      <summary><strong>Products</strong></summary>
     </details>
     <details>
       <summary><strong>profile</strong></summary>
