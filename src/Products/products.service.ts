@@ -11,5 +11,9 @@ export const ProductService: IProductServiceContract = {
         const productById = await ProductRepository.getProductById(id)
         // if (!productById) return null
         return productById
+    },
+    createProduct: async(data) => {
+        const newProduct = await ProductRepository.createProduct(data)
+        return newProduct
     }
 }

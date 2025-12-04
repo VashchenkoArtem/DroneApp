@@ -10,7 +10,7 @@ export type UpdateProduct = Prisma.ProductUncheckedUpdateInput
 export interface IProductServiceContract {
     getAllProducts: () => Promise<ProductWithId[]>
     getProductById: (id: number) => Promise<ProductWithId[] | null>
-    // createProduct: (data: CreateProduct) => Promise<ProductWithId[] | null>
+    createProduct: (data: CreateProduct) => Promise<ProductWithId[] | null>
     // updatProduct: (id: number, data: UpdateProduct) => Promise<ProductWithId[] | null>
     // deleteProduct: (id: number) => Promise<ProductWithId[] | null>
 }
@@ -24,11 +24,10 @@ export interface IProductControllerContract {
         req: Request<{id: string}, ProductWithId | string, object>,
         res: Response<ProductWithId | string>
     ) => Promise<void>;
-
-    // createProduct: (
-    //     req: Request<>,
-    //     res: Response<>
-    // ) => Promise<void>
+    createProduct: (
+        req: Request<object, ProductWithId | string, CreateProduct, object>,
+        res: Response<ProductWithId | string>
+    ) => Promise<void>
     // updateProduct: (
     //     req: Request<>,
     //     res: Response<>
@@ -42,7 +41,7 @@ export interface IProductControllerContract {
 export interface IProductRepositoryContract {
     getAllProducts: () => Promise<ProductWithId[]>
     getProductById: (id: number) => Promise<ProductWithId | null>
-    // createProduct: (data: CreateProduct) => Promise<ProductWithId[] | null>
+    createProduct: (data: CreateProduct) => Promise<ProductWithId | null>
     // updateProduct: (id: number, data: UpdateProduct) => Promise<ProductWithId[] | null>
     // deleteProduct: (id: number) => Promise<ProductWithId[] | null>
 }
