@@ -66,9 +66,9 @@
 ## Використані статус-коди | Used status-codes
   | **Status-code \| Статус-код** | **Description \| Опис** |
   | --- | --- |
-  | 200 | Ok \| Успіх |
-  | 201 | Succes create \| Успішно створено |
-  | 204 | Empty \| Порожньо |
+  | 200 | Success \| Успіх |
+  | 201 | Succes created \| Успішно створено |
+  | 204 | Without information \| Немає інформації |
   | --- | --- |
   | 400 | Incorrect request \| Некоректий запит |
   | 401 | Not authorized \| Не авторизований |
