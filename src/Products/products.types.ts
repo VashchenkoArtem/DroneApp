@@ -41,7 +41,7 @@ export interface IProductControllerContract {
 
 export interface IProductRepositoryContract {
     getAllProducts: () => Promise<ProductWithId[]>
-    getProductById: (id: number) => Promise<ProductWithId[] | null>
+    getProductById: (id: number) => Promise<ProductWithId | null>
     // createProduct: (data: CreateProduct) => Promise<ProductWithId[] | null>
     // updateProduct: (id: number, data: UpdateProduct) => Promise<ProductWithId[] | null>
     // deleteProduct: (id: number) => Promise<ProductWithId[] | null>
