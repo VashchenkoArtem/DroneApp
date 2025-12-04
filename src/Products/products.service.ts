@@ -5,5 +5,11 @@ export const ProductService: IProductServiceContract = {
     getAllProducts: async() => {
         const products = await ProductRepository.getAllProducts()
         return products
+    },
+
+    getProductById: async(id) => {
+        const productById = await ProductRepository.getProductById(id)
+        // if (!productById) return null
+        return productById
     }
 }

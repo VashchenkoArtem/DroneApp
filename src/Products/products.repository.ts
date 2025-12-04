@@ -10,5 +10,19 @@ export const ProductRepository: IProductRepositoryContract = {
         catch(error){
             throw error
         }
+    },
+
+    getProductById: async(id) => {
+        try{
+            const productById = await client.product.findUnique({
+                where: {
+                    id: id
+                }
+            })
+            return productById;
+        }
+        catch(error){
+            throw error
+        }
     }
 }
