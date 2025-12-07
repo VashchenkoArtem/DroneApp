@@ -33,5 +33,17 @@ export const ProductRepository: IProductRepositoryContract = {
             console.log (error)
             throw error
         }
-    }
+    },
+    updateProduct: async(id, data) => {
+        try {
+            const updatedProduct = await client.product.update({
+                where: {id: id},
+                data: data
+            })
+            return updatedProduct
+        } catch (error) {
+            console.log (error)
+            throw error
+        }
+    },
 }

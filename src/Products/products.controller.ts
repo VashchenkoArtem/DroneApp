@@ -27,7 +27,22 @@ export const ProductController:IProductControllerContract = {
 
     createProduct: async(req, res) => {
         const data = req.body
-        const cretaedProduct = await ProductService.createProduct(data)
-        res.status(201).json(cretaedProduct);
-    }
+        const createdProduct = await ProductService.createProduct(data)
+        res.status(201).json(createdProduct);
+    },
+
+    updateProduct: async(req, res) => {
+        const id = Number(req.params.id)
+        const data = req.body
+        if (Number.isNaN(id)) {
+            res.status(400).json("ID must be integer");
+            return;
+        }
+        const updatedProduct = await ProductService.updateProduct(id, data)
+        if (!updatedProduct) {
+            res.status(404).json("Product not found");
+            return;
+        }
+        res.status(200).json(updatedProduct);
+    },
 }
