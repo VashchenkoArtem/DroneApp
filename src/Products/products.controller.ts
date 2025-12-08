@@ -28,6 +28,16 @@ export const ProductController:IProductControllerContract = {
     createProduct: async(req, res) => {
         const data = req.body
         const createdProduct = await ProductService.createProduct(data)
+        if (!data){
+            res.status(422).json('There is lack of data. Enter more information.')
+            return;
+        }
+
+        if (!createdProduct){
+            res.status(500).json('There went something wrong on server side')
+            return;
+        }
+
         res.status(201).json(createdProduct);
     },
 
@@ -38,11 +48,17 @@ export const ProductController:IProductControllerContract = {
             res.status(400).json("ID must be integer");
             return;
         }
-        const updatedProduct = await ProductService.updateProduct(id, data)
-        if (!updatedProduct) {
-            res.status(404).json("Product not found");
+
+        if (typeof data === 'undefined') {
+            res.status(422).json("Product not found");
             return;
         }
+        const updatedProduct = await ProductService.updateProduct(id, data)
+        if (!updatedProduct){
+            res.status(500).json('There went something wrong on server side')
+            return;
+        }
+        
         res.status(200).json(updatedProduct);
     },
 }
