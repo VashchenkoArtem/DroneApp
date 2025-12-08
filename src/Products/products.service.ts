@@ -6,7 +6,6 @@ export const ProductService: IProductServiceContract = {
         const products = await ProductRepository.getAllProducts()
         return products
     },
-
     getProductById: async(id) => {
         const productById = await ProductRepository.getProductById(id)
         // if (!productById) return null
@@ -21,5 +20,9 @@ export const ProductService: IProductServiceContract = {
     deleteProduct: async(id) => {
         const deletedProduct = await ProductRepository.deleteProduct(id)
         return deletedProduct
+    },
+    updateProduct: async(id, data) => {
+        const updatedProduct = await ProductRepository.updateProduct(id, data)
+        return updatedProduct
     }
 }
