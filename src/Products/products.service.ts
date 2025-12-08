@@ -12,8 +12,14 @@ export const ProductService: IProductServiceContract = {
         // if (!productById) return null
         return productById
     },
+
     createProduct: async(data) => {
         const newProduct = await ProductRepository.createProduct(data)
         return newProduct
+    },
+
+    deleteProduct: async(id) => {
+        const deletedProduct = await ProductRepository.deleteProduct(id)
+        return deletedProduct
     }
 }
