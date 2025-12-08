@@ -54,13 +54,13 @@
     </details>
     <details>
       <summary><strong>Products</strong></summary>
-      <ol>
+      <ul>
         <li>products.types.ts</li>
         <li>products.router.ts</li>
         <li>products.controller.ts</li>
         <li>products.service.ts</li>
         <li>products.repository.ts</li>
-      </ol>
+      </ul>
     </details>
     <details>
       <summary><strong>Profile</strong></summary>

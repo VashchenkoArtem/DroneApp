@@ -25,7 +25,6 @@ export interface IProductControllerContract {
         req: Request<{id: string}, ProductWithId | string, object>,
         res: Response<ProductWithId | string>
     ) => Promise<void>;
-
     createProduct: (
         req: Request<object, ProductWithId | string, CreateProduct, object>,
         res: Response<ProductWithId | string>
