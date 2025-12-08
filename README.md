@@ -38,34 +38,34 @@
 ## Архітектура проєкту | Project architecture
   - *src* - Створення та налаштування додатків | Creating application and settings 
     <details>
-      <summary><strong>main</strong></summary>
+      <summary><strong>Main</strong></summary>
     </details>
     <details>
-      <summary><strong>catalog</strong></summary>
+      <summary><strong>Catalog</strong></summary>
     </details>
     <details>
-      <summary><strong>order</strong></summary>
+      <summary><strong>Order</strong></summary>
     </details>
     <details>
-      <summary><strong>contacts</strong></summary>
+      <summary><strong>Contacts</strong></summary>
     </details>
     <details>
-      <summary><strong>about us</strong></summary>
+      <summary><strong>About us</strong></summary>
     </details>
     <details>
       <summary><strong>Products</strong></summary>
+      <ol>
+        <li>products.types.ts</li>
+        <li>products.router.ts</li>
+        <li>products.controller.ts</li>
+        <li>products.service.ts</li>
+        <li>products.repository.ts</li>
+      </ol>
     </details>
     <details>
-      <summary><strong>profile
-        <ol>
-          <li>products.types.ts</li>
-          <li>products.router.ts</li>
-          <li>products.controller.ts</li>
-          <li>products.service.ts</li>
-          <li>products.repository.ts</li>
-        </ol>
-      </strong></summary>
+      <summary><strong>Profile</strong></summary>
     </details>
+
   - *prisma* - Робота з БД | Work with data base
   - *.gitignore*- Файли, які не додаються в commit | Files that are not attached to commit
   - *package-lock.json* і *package.json* - Налаштування проєкту | Project settings
