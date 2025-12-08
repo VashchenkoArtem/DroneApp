@@ -38,7 +38,11 @@ export const ProductRepository: IProductRepositoryContract = {
 
     deleteProduct: async(id) => {
         try {
-            const deletedProduct = await client.product.delete({id: id})
+            const deletedProduct = await client.product.delete({
+                where: {
+                    id: id
+                }
+            })
             return deletedProduct
         } catch (error) {
             console.log (error)
