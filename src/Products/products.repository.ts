@@ -25,10 +25,21 @@ export const ProductRepository: IProductRepositoryContract = {
             throw error
         }
     },
+
     createProduct: async(data) => {
         try {
             const createdProduct = await client.product.create({data: data})
             return createdProduct
+        } catch (error) {
+            console.log (error)
+            throw error
+        }
+    },
+
+    deleteProduct: async(id) => {
+        try {
+            const deletedProduct = await client.product.delete({id: id})
+            return deletedProduct
         } catch (error) {
             console.log (error)
             throw error
