@@ -49,6 +49,14 @@ model Product {
   blocks ProductBlock[]
   orders ProductOnOrder[]
   specifications ProductSpecifications?
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+model Category{
+  id Int @id @unique @default(autoincrement())
+  title String
+  image String
+  products Product[]
 }
 model ProductBlock {
   id Int @id @unique @default(autoincrement())
