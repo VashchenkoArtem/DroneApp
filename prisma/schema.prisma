@@ -52,12 +52,6 @@ model Product {
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 }
-model Category{
-  id Int @id @unique @default(autoincrement())
-  title String
-  image String
-  products Product[]
-}
 model ProductBlock {
   id Int @id @unique @default(autoincrement())
   title String
@@ -65,15 +59,21 @@ model ProductBlock {
   blockAlign String
   image String
   blockOrder Int   
-  product Product @relation(fields: [blockId], references: [id])
-  blockId Int @unique
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+model Category{
+  id Int @id @unique @default(autoincrement())
+  title String
+  image String
+  products Product[]
 }
 model ProductOnOrder{
   id Int @id @unique @default(autoincrement())
   product Product @relation(fields: [productId], references: [id])
   productId Int @unique
-  order Order @relation(fields: [orderId], references: [id])
-  orderId Int @unique
+  order Order @relation(fields: [blockId], references: [id])
+  blockId Int @unique
 }
 model Order{
   id Int @id @unique @default(autoincrement())

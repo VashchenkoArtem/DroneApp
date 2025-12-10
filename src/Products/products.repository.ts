@@ -1,5 +1,6 @@
 import { IProductRepositoryContract } from "./products.types";
 import { client } from '../client/client'
+import { Prisma } from "@prisma/client";
 
 export const ProductRepository: IProductRepositoryContract = {
     getAllProducts: async() => {
@@ -28,10 +29,21 @@ export const ProductRepository: IProductRepositoryContract = {
 
     createProduct: async(data) => {
         try {
-            const createdProduct = await client.product.create({data: data})
+            const { blocks, ...productData } = data
+            const createdProduct = await client.product.create({
+                data: { ...productData,
+                    blocks: {
+                        createMany: {
+                            data: blocks as Prisma.ProductBlockCreateManyProductInput[]
+                        }
+                    }
+                 },
+                 include: {
+                    blocks: true
+                 }
+            })
             return createdProduct
         } catch (error) {
-            console.log (error)
             throw error
         }
     },
