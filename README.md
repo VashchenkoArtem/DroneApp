@@ -63,6 +63,16 @@
       </ul>
     </details>
     <details>
+      <summary><strong>Categories</strong></summary>
+      <ul>
+        <li>categories.types.ts</li>
+        <li>categories.router.ts</li>
+        <li>categories.controller.ts</li>
+        <li>categories.service.ts</li>
+        <li>categories.repository.ts</li>
+      </ul>
+    </details>
+    <details>
       <summary><strong>Profile</strong></summary>
     </details>
 

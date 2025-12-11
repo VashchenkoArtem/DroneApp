@@ -10,5 +10,19 @@ export const CategoriesRepository: ICategoriesRepositoryContract = {
         } catch (error){
             throw error
         }
+    },
+
+    createCategory: async(data) => {
+        try {
+            const createdCategory = await client.category.create({data})
+            return createdCategory
+        } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError){
+                if (error.code === 'P2007') {
+                    console.log('Data was entered wring. Try again')
+                }
+            }
+            throw error
+        }
     }
 }
