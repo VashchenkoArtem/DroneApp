@@ -64,7 +64,7 @@ model ProductBlock {
 }
 model Category{
   id Int @id @unique @default(autoincrement())
-  title String
+  title String @unique
   image String
   products Product[]
 }

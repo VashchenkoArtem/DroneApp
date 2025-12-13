@@ -3,9 +3,12 @@ import { client } from '../client/client'
 import { Prisma } from "@prisma/client";
 
 export const ProductRepository: IProductRepositoryContract = {
-    getAllProducts: async() => {
+    getAllProducts: async(categoryId) => {
         try{
-            const products = await client.product.findMany()
+            const products = await client.product.findMany({
+                where:{categoryId: categoryId},
+                include: {blocks: true}
+            })
             return products;
         }
         catch(error){
@@ -18,6 +21,9 @@ export const ProductRepository: IProductRepositoryContract = {
             const productById = await client.product.findUnique({
                 where: {
                     id: id
+                },
+                include: {
+                    blocks: true
                 }
             })
             return productById;

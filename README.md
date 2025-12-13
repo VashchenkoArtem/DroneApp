@@ -82,9 +82,296 @@
 
 
 ## Використані статус-коди | Used status-codes
+
+### Products
+
+<br>
+<hr>
+<br>
+
+### Усі товари | All products
+
+```
+GET /products
+```
   | **Status-code \| Статус-код** | **Description \| Опис** |
   | --- | --- |
   | 200 | Success \| Успіх |
+  | 204 | Without information \| Немає інформації |
+<details>
+<summary>Відповідь | Response</summary>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1,
+    "blocks": [
+      {
+        "id": 1,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "left",
+        "image": "design.png",
+        "blockOrder": 1,
+        "productId": 1
+      },
+      {
+        "id": 2,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "center",
+        "image": "design.png",
+        "blockOrder": 2,
+        "productId": 1
+    },
+    {
+        "id": 3,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "right",
+        "image": "design.png",
+        "blockOrder": 3,
+        "productId": 1
+    }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "iPhone 16 Pro",
+    "price": 40999,
+    "discount": 0,
+    "image": "iphone-16-pro.png",
+    "description": "Iphone 16",
+    "count": 325,
+    "categoryId": 2,
+    "blocks": [
+      {
+        "id": 1,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "left",
+        "image": "design.png",
+        "blockOrder": 1,
+        "productId": 1
+      },
+      {
+        "id": 2,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "center",
+        "image": "design.png",
+        "blockOrder": 2,
+        "productId": 1
+    },
+    {
+        "id": 3,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "right",
+        "image": "design.png",
+        "blockOrder": 3,
+        "productId": 1
+    }
+    ]
+  }
+]
+```
+</details>
+
+<br>
+<hr>
+<br>
+
+### Створення товару | Product creating
+
+```
+POST /products
+```
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 201 | Succes created \| Успішно створено |
+  | 422 | Not enough information \| Недостатньо інформації |
+  | 500 | Server error \| Внутрішня помилка сервера |
+<details>
+<summary>Відповідь | Response</summary>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1,
+    "blocks": [
+      {
+        "id": 1,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "left",
+        "image": "design.png",
+        "blockOrder": 1,
+        "productId": 1
+      },
+      {
+        "id": 2,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "center",
+        "image": "design.png",
+        "blockOrder": 2,
+        "productId": 1
+    },
+    {
+        "id": 3,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "right",
+        "image": "design.png",
+        "blockOrder": 3,
+        "productId": 1
+    }
+    ]
+  }
+]
+```
+</details>
+
+<br>
+<hr>
+<br>
+
+### Конкретний товар | Specific product
+```
+GET /products/:id
+```
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 400 | Incorrect request \| Некоректий запит |
+  | 500 | Server error \| Внутрішня помилка сервера |
+
+<details>
+<summary>Відповідь | Response</summary>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1,
+    "blocks": [
+      {
+        "id": 1,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "left",
+        "image": "design.png",
+        "blockOrder": 1,
+        "productId": 1
+      },
+      {
+        "id": 2,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "center",
+        "image": "design.png",
+        "blockOrder": 2,
+        "productId": 1
+    },
+    {
+        "id": 3,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "right",
+        "image": "design.png",
+        "blockOrder": 3,
+        "productId": 1
+    }
+    ]
+  }
+]
+```
+</details>
+
+### Видалення товару | Product deleting
+
+```
+DELETE /products/:id
+```
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 400 | Incorrect request \| Некоректий запит |
+  | 500 | Server error \| Внутрішня помилка сервера |
+
+<details>
+<summary>Відповідь | Response</summary>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1
+  }
+]
+```
+</details>
+
+### Оновлення товару | Product updating
+
+```
+PATCH /products/:id
+```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 400 | Incorrect request \| Некоректий запит |
+  | 422 | Not enough information \| Недостатньо інформації |
+  | 500 | Server error \| Внутрішня помилка сервера |
+
+<details>
+<summary>Відповідь | Response</summary>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1
+  }
+]
+```
+</details>
+
+<!-- 
   | 201 | Succes created \| Успішно створено |
   | 204 | Without information \| Немає інформації |
   | --- | --- |
@@ -97,4 +384,4 @@
   | 422 | Not enough information \| Недостатньо інформації |
   | --- | --- |
   | 500 | Server error \| Внутрішня помилка сервера |
-  | 507 | Storage full \| Сховище заповнено |
+  | 507 | Storage full \| Сховище заповнено | -->

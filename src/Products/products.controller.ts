@@ -3,10 +3,15 @@ import { IProductControllerContract } from "./products.types";
 
 export const ProductController: IProductControllerContract = {
     getAllProducts: async(req, res): Promise<void> => {
-        req = req
-        const response = await ProductService.getAllProducts();
-        if (response.length === 0){
-            res.status(204).json("Товарів поки що немає")
+        const categoryFilter = Number(req.query.categoryId);
+        if (Number.isNaN(categoryFilter)){
+            res.status(400).json(`Id does not found`)
+            return;
+        }
+        const response = await ProductService.getAllProducts(categoryFilter);
+        if (!response || response.length === 0){
+            res.status(204).json("There is no products now")
+            return;
         }
         res.status(200).json(response)
     },
@@ -66,7 +71,7 @@ export const ProductController: IProductControllerContract = {
         }
 
         if (typeof data === 'undefined') {
-            res.status(422).json("Product not found");
+            res.status(422).json("Please, enter a fields, which you want to update");
             return;
         }
         const updatedProduct = await ProductService.updateProduct(id, data)
