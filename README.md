@@ -343,11 +343,11 @@ DELETE /products/:id
 ```
 </details>
 
-### Оновлення товару | Product updating
-
 <br>
 <hr>
 <br>
+
+### Оновлення товару | Product updating
 
 ```
 PATCH /products/:id
