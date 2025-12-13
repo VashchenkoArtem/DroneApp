@@ -359,7 +359,25 @@ PATCH /products/:id
   | 400 | Incorrect request \| Некоректий запит |
   | 422 | Not enough information \| Недостатньо інформації |
   | 500 | Server error \| Внутрішня помилка сервера |
+  
+<details>
+<summary>Відповідь | Response</summary>
 
+```json
+[
+  {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1
+  }
+]
+```
+</details>
 
 <!-- 
   | 201 | Succes created \| Успішно створено |
