@@ -345,6 +345,10 @@ DELETE /products/:id
 
 ### Оновлення товару | Product updating
 
+<br>
+<hr>
+<br>
+
 ```
 PATCH /products/:id
 ```
