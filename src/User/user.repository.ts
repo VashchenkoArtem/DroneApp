@@ -41,10 +41,44 @@ export const UserRepository: IUserRepositoryContract = {
     createUser: async(dataWithHashedPassword) =>{
         try {
             const user = await client.user.create({
-                data: dataWithHashedPassword
-            })
+                data: dataWithHashedPassword,
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    patronMik: true,
+                    email: true,
+                    birthDate: true,
+                    phoneNumber: true,
+                    deliveries: true
+                }
+            }
+)
             return user
         } catch (error) {
+            throw error
+        }
+    },
+    updateUser: async(userId, data) => {
+        try{
+            const updatedUser = await client.user.update({
+                where: {
+                    id: userId
+                },
+                data: data, 
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    patronMik: true,
+                    email: true,
+                    birthDate: true,
+                    phoneNumber: true,
+                    deliveries: true
+                }
+            })
+            return updatedUser
+        }catch(error){
             throw error
         }
     }

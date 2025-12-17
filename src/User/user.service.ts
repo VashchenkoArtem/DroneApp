@@ -26,6 +26,10 @@ export const UserService: IUserServiceContract = {
         })
 
         return {token}
+    },
+    updateUser: async(data, userId) => {
+        const updatedUser = await UserRepository.updateUser(userId, data)
+        return updatedUser
     }
     
 }

@@ -3,8 +3,11 @@ import { Prisma } from "@prisma/client"
 
 
 export type User = Prisma.UserGetPayload<{}>
+
+
 export type CreateUser = Prisma.UserUncheckedCreateInput
 
+export type UpdateUser = Prisma.UserUpdateInput
 
 export type UserWithoutPassword = Prisma.UserGetPayload<{
     select: {
@@ -29,6 +32,10 @@ export interface IUserControllerContract {
         // {message: string}
         req: Request<object, AuthToken | string, CreateUser, object>,
         res: Response<AuthToken | string>
+    ) => void,
+    updateUser: (
+        req: Request<{id: number}, UserWithoutPassword | string, UpdateUser, object>,
+        res: Response<UserWithoutPassword | string>
     ) => void
 
     // me: (
@@ -42,6 +49,7 @@ export interface IUserControllerContract {
 
 export interface IUserServiceContract {
     registration: (data: CreateUser) => Promise<AuthToken | string>
+    updateUser: (data: UpdateUser, id: number) => Promise<UserWithoutPassword | string>
     // login: (data: CreateUser) => Promise<AuthToken | string>
     // me: (id: number) => Promise<UserWithoutPassword | string>
 }
@@ -49,5 +57,6 @@ export interface IUserServiceContract {
 export interface IUserRepositoryContract {
     findUserByEmail: (email: string) => Promise<User | null>;
     // findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
-    createUser: (dataWithHashedPassword: CreateUser) => Promise<User>;
+    createUser: (dataWithHashedPassword: CreateUser) => Promise<UserWithoutPassword>
+    updateUser: (id: number, data: UpdateUser) => Promise<UserWithoutPassword>
 }
