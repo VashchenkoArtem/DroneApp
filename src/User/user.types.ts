@@ -7,16 +7,9 @@ export type CreateUser = Prisma.UserUncheckedCreateInput
 
 
 export type UserWithoutPassword = Prisma.UserGetPayload<{
-    select: {
-        id: true,
-        firstName: true,
-        patronMik: true,
-        lastName: true,
-        email: true,
-        birthDate: true,
-        phoneNumber: true,
-        deliveries: true
-    }
+    include: { 
+        deliveries: true 
+    };
 }>
 
 
@@ -24,17 +17,24 @@ export interface AuthToken {
     token: string
 }
 
+export interface ErrorResponse {
+    message: string;
+}
+
+export interface AuthenticatedUser {
+	id: number;
+}
+
+
 export interface IUserControllerContract {
     registration: (
-        // {message: string}
-        req: Request<object, AuthToken | string, CreateUser, object>,
-        res: Response<AuthToken | string>
-    ) => void
-
-    // me: (
-    //     req: Request<object, UserWithoutPassword | {message: string}, object, object, {userId: number}>,
-    //     res: Response<UserWithoutPassword | {message: string}, {userId: number}>
-    // ) => void
+        req: Request<object, AuthToken | ErrorResponse | string, CreateUser>,
+        res: Response<AuthToken | ErrorResponse | string>
+    ) => Promise<Response | void>;
+    me: (
+        req: Request, 
+        res: Response<UserWithoutPassword | {message: string}>
+    ) => Promise<Response | void>;
 }
   
 
@@ -43,11 +43,11 @@ export interface IUserControllerContract {
 export interface IUserServiceContract {
     registration: (data: CreateUser) => Promise<AuthToken | string>
     // login: (data: CreateUser) => Promise<AuthToken | string>
-    // me: (id: number) => Promise<UserWithoutPassword | string>
+    me: (id: number) => Promise<UserWithoutPassword | string>
 }
 
 export interface IUserRepositoryContract {
     findUserByEmail: (email: string) => Promise<User | null>;
-    // findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
     createUser: (dataWithHashedPassword: CreateUser) => Promise<User>;
+    findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
 }

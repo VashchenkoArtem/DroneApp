@@ -1,4 +1,4 @@
-import { ICategoriesRepositoryContract } from "./categories.types";
+import { ICategoriesRepositoryContract } from './categories.types';
 import { client } from '../client/client'
 import { Prisma } from "@prisma/client";
 
