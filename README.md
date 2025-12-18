@@ -73,7 +73,14 @@
       </ul>
     </details>
     <details>
-      <summary><strong>Profile</strong></summary>
+      <summary><strong>User</strong></summary>
+      <ul>
+        <li>user.types.ts</li>
+        <li>user.router.ts</li>
+        <li>user.controller.ts</li>
+        <li>user.service.ts</li>
+        <li>user.repository.ts</li>
+      </ul>
     </details>
 
   - *prisma* - Робота з БД | Work with data base
@@ -83,11 +90,8 @@
 
 ## Використані статус-коди | Used status-codes
 
-### Products
+## Products
 
-<br>
-<hr>
-<br>
 
 ### Усі товари | All products
 

@@ -32,7 +32,7 @@ export const userController: IUserControllerContract = {
             }
             return;
         }
-        res.status(201).json(response);
+        res.status(200).json(response);
     },
     me: async (req, res) => {
         const userId = res.locals.userId;
