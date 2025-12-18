@@ -34,6 +34,11 @@ export interface AuthToken {
     token: string
 }
 
+export interface ErrorResponse {
+    message: string;
+}
+
+
 export interface IUserControllerContract {
     registration: (
         // {message: string}
@@ -59,6 +64,10 @@ export interface IUserControllerContract {
     //     req: Request<object, UserWithoutPassword | {message: string}, object, object, {userId: number}>,
     //     res: Response<UserWithoutPassword | {message: string}, {userId: number}>
     // ) => void
+    me: (
+        req: Request, 
+        res: Response<UserWithoutPassword | {message: string}>
+    ) => Promise<Response | void>;
 }
   
 
@@ -69,7 +78,7 @@ export interface IUserServiceContract {
     updateUser: (data: UpdateUser, id: number) => Promise<UserWithoutPassword | string>
     login: (data: UserLogin) => Promise<AuthToken | string>
     // login: (data: CreateUser) => Promise<AuthToken | string>
-    // me: (id: number) => Promise<UserWithoutPassword | string>
+    me: (id: number) => Promise<UserWithoutPassword | string>
 }
 
 export interface IUserRepositoryContract {
@@ -77,4 +86,5 @@ export interface IUserRepositoryContract {
     // findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
     createUser: (dataWithHashedPassword: CreateUser) => Promise<UserWithoutPassword>
     updateUser: (id: number, data: UpdateUser) => Promise<UserWithoutPassword>
+    findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
 }

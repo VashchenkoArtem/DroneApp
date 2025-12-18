@@ -3,6 +3,7 @@ import { UserRepository } from "./user.repository";
 import { IUserServiceContract } from "./user.types";
 import { sign } from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export const UserService: IUserServiceContract = {
     registration: async (data) => {
@@ -21,7 +22,10 @@ export const UserService: IUserServiceContract = {
         
 
         const createdUser = await UserRepository.createUser(dataWithHashedPassword)
-        const token = sign({id: createdUser.id}, ENV.SECRET_KEY, {
+        if (!createdUser) {
+            return "Error creating user";
+        }
+        const token = jwt.sign({id: createdUser.id}, ENV.SECRET_KEY, {
             expiresIn: '7d'
         })
 
@@ -46,6 +50,13 @@ export const UserService: IUserServiceContract = {
 
 		const token = sign({ id: authUser.id }, ENV.SECRET_KEY, { expiresIn: "7d" })
 		return {token}
+    },
+    me: async (id) => {
+        const foundedUser = await UserRepository.findUserByIdWithoutPassword(id)
+        if (!foundedUser){
+            return "cannot find user"
+        }
+        return foundedUser
     }
     
 }
