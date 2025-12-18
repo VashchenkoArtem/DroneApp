@@ -38,6 +38,11 @@ export interface ErrorResponse {
     message: string;
 }
 
+export type Adress = Prisma.DeliveryGetPayload<{}>
+
+export type CreateAdress = Prisma.DeliveryUncheckedCreateInput
+
+export type UpdateAdress = Prisma.DeliveryUpdateInput
 
 export interface IUserControllerContract {
     registration: (
@@ -59,15 +64,22 @@ export interface IUserControllerContract {
         >,
         res: Response<AuthToken | string> 
     ) => void,
-
-    // me: (
-    //     req: Request<object, UserWithoutPassword | {message: string}, object, object, {userId: number}>,
-    //     res: Response<UserWithoutPassword | {message: string}, {userId: number}>
-    // ) => void
     me: (
-        req: Request, 
-        res: Response<UserWithoutPassword | {message: string}>
+        req: Request<object, UserWithoutPassword | string, object, object, {userId: number}>, 
+        res: Response<UserWithoutPassword | string>
     ) => Promise<Response | void>;
+    createAdress: (
+        req: Request<object, Adress | string, CreateAdress, object>,
+        res: Response<Adress | string>
+    ) => void,
+    deleteAdress: (
+        req: Request<{adressId: number}, Adress | string, object >,
+        res: Response<Adress | string>
+    ) => void,
+    updateAdress: (
+        req: Request<{adressId: number}, Adress | string, UpdateAdress>,
+        res: Response<Adress | string>
+    ) => void
 }
   
 
@@ -77,8 +89,10 @@ export interface IUserServiceContract {
     registration: (data: CreateUser) => Promise<AuthToken | string>
     updateUser: (data: UpdateUser, id: number) => Promise<UserWithoutPassword | string>
     login: (data: UserLogin) => Promise<AuthToken | string>
-    // login: (data: CreateUser) => Promise<AuthToken | string>
     me: (id: number) => Promise<UserWithoutPassword | string>
+    createAdress: (data: CreateAdress) => Promise<Adress | string> 
+    deleteAdress: (id: number) => Promise<Adress | string>
+    updateAdress: (id: number, data: UpdateAdress) => Promise<Adress | string>
 }
 
 export interface IUserRepositoryContract {
@@ -87,4 +101,7 @@ export interface IUserRepositoryContract {
     createUser: (dataWithHashedPassword: CreateUser) => Promise<UserWithoutPassword>
     updateUser: (id: number, data: UpdateUser) => Promise<UserWithoutPassword>
     findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
+    createAdress: (data: CreateAdress) => Promise<Adress | null>
+    deleteAdress: (adressId: number) => Promise<Adress>
+    updateAdress: (adressId: number, data: UpdateAdress) => Promise<Adress>
 }

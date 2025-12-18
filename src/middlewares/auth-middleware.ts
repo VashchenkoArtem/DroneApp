@@ -26,6 +26,4 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
         res.status(401).json('Invalid token. Please, log in again')
         console.log(error)
     }
-
-
 }

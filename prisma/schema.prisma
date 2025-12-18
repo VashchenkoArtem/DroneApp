@@ -23,7 +23,7 @@ model User {
   password String
   birthDate DateTime
   phoneNumber String
-  deliveries Delivery?
+  deliveries Delivery[]
 }
 
 model Delivery {
@@ -34,8 +34,8 @@ model Delivery {
   phoneNumber String
   email String
   city String
-  user User @relation(fields: [authorId], references: [id])
-  authorId Int @unique
+  user User @relation(fields: [userId], references: [id])
+  userId Int 
 }
 
 model Product {

@@ -31,6 +31,7 @@ export const UserService: IUserServiceContract = {
 
         return {token}
     },
+    
     updateUser: async(data, userId) => {
         const updatedUser = await UserRepository.updateUser(userId, data)
         return updatedUser
@@ -51,12 +52,34 @@ export const UserService: IUserServiceContract = {
 		const token = sign({ id: authUser.id }, ENV.SECRET_KEY, { expiresIn: "7d" })
 		return {token}
     },
+
     me: async (id) => {
         const foundedUser = await UserRepository.findUserByIdWithoutPassword(id)
         if (!foundedUser){
             return "cannot find user"
         }
         return foundedUser
-    }
+    },
+
+    createAdress: async(data) => {
+        const adress = await UserRepository.createAdress(data)
+        if (!adress) {
+            return 'Adress was not found. Try another adress.'
+        }
+        return adress
+    },
+
+    deleteAdress: async (data) => {
+        const adress = await UserRepository.deleteAdress(data)
+        if (!adress) {
+            return 'Adress was not found. Try another adress.'
+        }
+        return adress
+    },
+
+    updateAdress: async(adressId, data) => {
+        const updatedAdress = await UserRepository.updateAdress(adressId, data)
+        return updatedAdress
+    },
     
 }

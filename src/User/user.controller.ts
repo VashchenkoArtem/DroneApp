@@ -35,28 +35,48 @@ export const userController: IUserControllerContract = {
         res.status(201).json(response);
     },
     me: async (req, res) => {
-    try {
         const userId = res.locals.userId;
         
         if (!userId) {
-            return res.status(401).json({ message: "Unauthorized" });
+            res.status(401).json("Unauthorized");
         }
 
         const me = await UserService.me(userId);
 
         if (typeof me === "string") {
-            return res.status(404).json({ message: me });
+            res.status(404).json(me);
         }
 
-        return res.status(200).json(me);
+        res.status(200).json(me);
         
-    } catch (error) {
-        console.error(error);
-        if (!res.headersSent) {
-            return res.status(500).json({ message: "Internal Server Error" });
-        }
-        return; 
-    }
-    }
-};
+    },
+    createAdress: async (req, res) => {
+        // const id = res.locals.adressId;
+        const body = req.body;
+        // if (!id) {
+        //     return res.status(404).json("User not found. Please, register your account")
+        // }
 
+        const response = await UserService.createAdress(body)
+        res.status(201).json(response)
+    },
+
+    deleteAdress: async (req, res) => {
+        const adressId = Number(req.params.adressId)
+
+        const deletedAdress = await UserService.deleteAdress(adressId)
+
+        if (!deletedAdress) {
+            res.status(400).json('There was an error while deleting an adress')
+        }
+        res.status(200).json(deletedAdress)
+    },
+
+    updateAdress: async(req, res) => {
+        const body = req.body;
+        const adressId = Number(req.params.adressId)
+
+        const updateAdress = await UserService.updateAdress(adressId, body)
+        res.status(200).json(updateAdress)
+    },
+};

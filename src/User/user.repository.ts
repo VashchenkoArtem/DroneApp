@@ -21,8 +21,8 @@ export const UserRepository: IUserRepositoryContract = {
                     phoneNumber: true,
                     deliveries: true
                 }
-            }
-)
+            })
+
             return user
         } catch (error) {
             console.error("Error in createUser repository:", error);
@@ -55,7 +55,6 @@ export const UserRepository: IUserRepositoryContract = {
 
             if (!user) return null;
             const { password, ...userWithoutPassword } = user;
-
             return userWithoutPassword as UserWithoutPassword;
         } catch (error) {
             console.error("Error in findUserById repository:", error);
@@ -81,6 +80,42 @@ export const UserRepository: IUserRepositoryContract = {
                 }
             })
             return updatedUser
+        }catch(error){
+            throw error
+        }
+    },
+    
+    createAdress: async(data) => {
+        try {
+            const adress = await client.delivery.create({
+                data: data,
+
+            })
+            return adress
+        } catch (error) {
+            throw error
+        }
+    },
+    deleteAdress: async(adressId) => {
+        try{
+            const deletedDelivery = await client.delivery.delete({
+                where: {
+                    id: adressId
+                }
+            })
+            return deletedDelivery
+        }catch(error){
+            throw error
+        }
+    },
+    updateAdress: async (adressId, data)=>{
+        try{
+            const updatedAdress = await client.delivery.update({
+                where: {
+                    id: adressId
+                },data:data
+            })
+            return updatedAdress
         }catch(error){
             throw error
         }
