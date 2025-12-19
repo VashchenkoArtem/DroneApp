@@ -90,10 +90,11 @@
 
 ## Використані статус-коди | Used status-codes
 
-## Products
+
+<details>
+<summary><strong>Products</strong></summary>
 
 
-### Усі товари | All products
 
 ```
 GET /products
@@ -198,6 +199,7 @@ GET /products
 ```
 POST /products
 ```
+
   | **Status-code \| Статус-код** | **Description \| Опис** |
   | --- | --- |
   | 201 | Succes created \| Успішно створено |
@@ -381,6 +383,196 @@ PATCH /products/:id
   }
 ]
 ```
+</details>
+</details>
+
+<details>
+  <summary><strong>User</strong></summary>
+
+  ### Реєстрація
+
+  ```
+  GET /user/registration
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 201 | Created successful \| Успішно створено |
+  | 401 | Not authorized \| Не авторизований |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzY2MTU2OTYxLCJleHAiOjE3NjY3NjE3NjF9.rK4TDWBXbuItrnY5xm6Sq-G7y6GL_p9k6xtgPZXCCEs"
+  }
+  ```
+  </details>
+
+  ### Авторизація
+
+  ```
+  GET /user/login
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 404 | Not found \| Не знайдено |
+  | 422 | Not enough information \| Недостатньо інформації |
+  | 500 | Server error \| Внутрішня помилка сервера |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzY2MTU2OTYxLCJleHAiOjE3NjY3NjE3NjF9.rK4TDWBXbuItrnY5xm6Sq-G7y6GL_p9k6xtgPZXCCEs"
+  }
+  ```
+  </details>
+
+  ### Особиста інформація | About me
+
+  ```
+  GET /user/me
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 404 | Not found \| Не знайдено |
+  | 401 | Not authorized \| Не авторизований |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+      "id": 6,
+      "firstName": "First Name",
+      "patronMik": "Patron Mik",
+      "lastName": "Second Name",
+      "email": "asdasdadasda@gmail.com",
+      "birthDate": "2024-12-24T06:22:33.444Z",
+      "phoneNumber": "123123121",
+      "deliveries": []
+  }
+  ```
+  </details>
+
+  ### Оновлення особистої інформації | Updating information about me
+
+  ```
+  PACTH /user/:id
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 422 | Not enough information \| Недостатньо інформації |
+  | 401 | Not authorized \| Не авторизований |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+      "id": 6,
+      "firstName": "Updated First Name",
+      "patronMik": "Updated Patron Mik",
+      "lastName": "Updated Second Name",
+      "email": "asdasdadasda@gmail.com",
+      "birthDate": "2024-12-24T06:22:33.444Z",
+      "phoneNumber": "123123121",
+      "deliveries": []
+  }
+  ```
+
+  </details>
+
+  ### Створення адреси доставки | Сreating address of delivery
+
+  ```
+  POST /user/adress
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 201 | Succes created \| Успішно створено |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+      "id": 9,
+      "firstName": "UHG",
+      "patronMik": "asdasda",
+      "lastName": "asdsad",
+      "phoneNumber": "123123121",
+      "email": "asdasdadasda@gmail.com",
+      "city": "Dnipro",
+      "userId": 6
+  }
+  ```
+  </details>
+
+  ### Видалення адреси доставки | Deleting address of delivery
+
+  ```
+  DELETE /user/adress/:adressId
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 400 | Incorrect request \| Некоректий запит |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+      "id": 9,
+      "firstName": "UHG",
+      "patronMik": "asdasda",
+      "lastName": "asdsad",
+      "phoneNumber": "123123121",
+      "email": "asdasdadasda@gmail.com",
+      "city": "Dnipro",
+      "userId": 6
+  }
+  ```
+  </details>
+
+  ### Оновлення адреси доставки | Updating address of delivery
+
+  ```
+  PATCH /user/adress/:adressId
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+      "id": 9,
+      "firstName": "UHG",
+      "patronMik": "asdasda",
+      "lastName": "asdsad",
+      "phoneNumber": "123123121",
+      "email": "asdasdadasda@gmail.com",
+      "city": "Dnipro",
+      "userId": 6
+  }
+  ```
+  </details>
 </details>
 
 <!-- 
