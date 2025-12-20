@@ -61,8 +61,8 @@ export const UserService: IUserServiceContract = {
         return foundedUser
     },
 
-    createAdress: async(data) => {
-        const adress = await UserRepository.createAdress(data)
+    createAdress: async(data, userId) => {
+        const adress = await UserRepository.createAdress(data, userId)
         if (!adress) {
             return 'Adress was not found. Try another adress.'
         }

@@ -51,13 +51,9 @@ export const userController: IUserControllerContract = {
         
     },
     createAdress: async (req, res) => {
-        // const id = res.locals.adressId;
+        const userId = res.locals.userId;
         const body = req.body;
-        // if (!id) {
-        //     return res.status(404).json("User not found. Please, register your account")
-        // }
-
-        const response = await UserService.createAdress(body)
+        const response = await UserService.createAdress(body, userId)
         res.status(201).json(response)
     },
 

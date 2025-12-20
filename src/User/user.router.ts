@@ -4,12 +4,13 @@ import { authMiddleware } from '../middlewares/auth-middleware'
 
 const router = Router();
 
-router.post("/user/registration", userController.registration);
-router.post("/user/login", authMiddleware, userController.login);
-router.patch("/user/:id", userController.updateUser);
-router.get('/user/me', authMiddleware ,authMiddleware, userController.me);
-router.post('/user/adress', authMiddleware, userController.createAdress);
-router.delete("/user/adress/:adressId", userController.deleteAdress)
-router.patch("/user/adress/:adressId", userController.updateAdress)
+router.post("/users/registration", userController.registration);
+router.post("/users/login", authMiddleware, userController.login);
+router.patch("/users/:id", userController.updateUser);
+router.get('/users/me', authMiddleware ,authMiddleware, userController.me);
+router.post('/users/address', authMiddleware, userController.createAdress);
+router.delete("/users/address/:addressId", userController.deleteAdress)
+router.patch("/users/address/:addressId", userController.updateAdress)
+
 
 export default router;

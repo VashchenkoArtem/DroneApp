@@ -15,7 +15,7 @@ export const UserRepository: IUserRepositoryContract = {
                     id: true,
                     firstName: true,
                     lastName: true,
-                    patronMik: true,
+                    patronymic: true,
                     email: true,
                     birthDate: true,
                     phoneNumber: true,
@@ -72,7 +72,7 @@ export const UserRepository: IUserRepositoryContract = {
                     id: true,
                     firstName: true,
                     lastName: true,
-                    patronMik: true,
+                    patronymic: true,
                     email: true,
                     birthDate: true,
                     phoneNumber: true,
@@ -85,20 +85,23 @@ export const UserRepository: IUserRepositoryContract = {
         }
     },
     
-    createAdress: async(data) => {
-        try {
-            const adress = await client.delivery.create({
-                data: data,
-
-            })
-            return adress
-        } catch (error) {
-            throw error
-        }
+    createAdress: async (data, userId) => {
+        const createdAddress =  client.address.create({
+        data: {
+            city: data.city,
+            street: data.street,
+            numberOfHouse: data.numberOfHouse,
+            numberOfFlat: data.numberOfFlat,
+            entrance: data.entrance,
+            userId: userId
+        },
+    })
+        return createdAddress
     },
+
     deleteAdress: async(adressId) => {
         try{
-            const deletedDelivery = await client.delivery.delete({
+            const deletedDelivery = await client.address.delete({
                 where: {
                     id: adressId
                 }
@@ -110,7 +113,7 @@ export const UserRepository: IUserRepositoryContract = {
     },
     updateAdress: async (adressId, data)=>{
         try{
-            const updatedAdress = await client.delivery.update({
+            const updatedAdress = await client.address.update({
                 where: {
                     id: adressId
                 },data:data
