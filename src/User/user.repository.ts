@@ -122,5 +122,18 @@ export const UserRepository: IUserRepositoryContract = {
         }catch(error){
             throw error
         }
+    },
+
+    getUserDeliveries: async (userId) => {
+        try {
+            const userDelivery = await client.address.findMany({
+                where: {
+                    userId: userId
+                }
+            })
+            return userDelivery
+        } catch (error){
+            throw error
+        }
     }
 };

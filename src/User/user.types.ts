@@ -72,13 +72,18 @@ export interface IUserControllerContract {
         res: Response<Address | string>
     ) => void,
     deleteAdress: (
-        req: Request<{adressId: number}, Address | string, object >,
+        req: Request<{addressId: number}, Address | string, object >,
         res: Response<Address | string>
     ) => void,
     updateAdress: (
         req: Request<{adressId: number}, Address | string, UpdateAddress>,
         res: Response<Address | string>
-    ) => void
+    ) => void, 
+    getUserDeliveries: (
+        req: Request<{userId: number}, Address[] | string, object>,
+        res: Response<Address[] | string>
+    ) => void,
+    
 }
   
 
@@ -92,6 +97,7 @@ export interface IUserServiceContract {
     createAdress: (data: CreateAddress, userId: number) => Promise<Address | string> 
     deleteAdress: (id: number) => Promise<Address | string>
     updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>
+    getUserDeliveries: (userId: number) => Promise<Address[] | string>
 }
 
 export interface IUserRepositoryContract {
@@ -103,4 +109,6 @@ export interface IUserRepositoryContract {
     createAdress: (data: CreateAddress, userId: number) => Promise<Address | null>
     deleteAdress: (adressId: number) => Promise<Address>
     updateAdress: (adressId: number, data: UpdateAddress) => Promise<Address>
+    getUserDeliveries: (userId: number) => Promise<Address[]>
+    
 }

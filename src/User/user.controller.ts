@@ -58,8 +58,8 @@ export const userController: IUserControllerContract = {
     },
 
     deleteAdress: async (req, res) => {
-        const adressId = Number(req.params.adressId)
-
+        const adressId = Number(req.params.addressId);
+        console.log(req.params.addressId)
         const deletedAdress = await UserService.deleteAdress(adressId)
 
         if (!deletedAdress) {
@@ -75,4 +75,19 @@ export const userController: IUserControllerContract = {
         const updateAdress = await UserService.updateAdress(adressId, body)
         res.status(200).json(updateAdress)
     },
+
+    getUserDeliveries: async(req, res) => {
+        const userId = Number(req.params.userId)    
+        if (Number.isNaN(userId)) {
+            res.status(401).json("Please, enter id correctly")
+            return;
+        }
+        const userDeliveries = await UserService.getUserDeliveries(userId);
+
+        if (!userDeliveries) {
+            res.status(404).json('User does not have any deliveries. Create one.');
+        }
+
+        res.status(200).json(userDeliveries);
+    }
 };

@@ -81,5 +81,12 @@ export const UserService: IUserServiceContract = {
         const updatedAdress = await UserRepository.updateAdress(adressId, data)
         return updatedAdress
     },
+
+    getUserDeliveries: async(userId) => {
+        const userDeliveries = await UserRepository.getUserDeliveries(userId)
+        return userDeliveries
+    },
+
+    
     
 }
