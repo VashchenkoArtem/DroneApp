@@ -370,8 +370,7 @@ PATCH /products/:id
 <summary>Тіло запиту | Request Body</summary>
 
 ```json
-[
-  {
+{
     "id": 1,
     "name": "iPhone 15 Pro",
     "price": 45999,
@@ -380,8 +379,7 @@ PATCH /products/:id
     "description": "Iphone 15",
     "count": 35,
     "categoryId": 1
-  }
-]
+}
 ```
 </details>
 
@@ -456,6 +454,18 @@ PATCH /products/:id
   | 404 | Not found \| Не знайдено |
   | 422 | Not enough information \| Недостатньо інформації |
   | 500 | Server error \| Внутрішня помилка сервера |
+
+
+  <details>
+  <summary>Тіло запиту | Body</summary>
+
+  ```json
+  {
+    email: 'asdasdadasda@gmail.com'
+    password: '64134578AA'
+  }
+  ```
+  </details>
 
   <details>
   <summary>Відповідь | Response</summary>
@@ -716,16 +726,16 @@ PATCH /products/:id
   <summary>Відповідь | Response</summary>
 
   ```json
-    {
-        id: 4
-        city: 'Dnipro'
-        street: 'Street Name'
-        numberOfHouse: 5
-        numberOfFlat: 563
-        entrance: 2
-        status: 'Delivered'
-        userId: 1
-    }
+  {
+    id: 4
+    city: 'Dnipro'
+    street: 'Street Name'
+    numberOfHouse: 5
+    numberOfFlat: 563
+    entrance: 2
+    status: 'Delivered'
+    userId: 1
+  }
   ```
   </details>
 
@@ -745,27 +755,27 @@ PATCH /products/:id
   <summary>Відповідь | Response</summary>
 
   ```json
-    [
-      {
-          id: 1
-          firstName: 'User 2'
-          patronMik: 'patronMik'
-          phoneNumber: '0501235466'
-          email: 'orderexample@gmail.com'
-          comment: 'Comments'
-          cityName: 'Dnipro'
-          paymentMethod: 'By card'
-          products: [
-            {
-              id: 2
-              product: 'Product 5'
-              productId: 5
-              order: 1
-              blockId: 3
-            }
-          ]
-      }
-    ]
+  [
+    {
+      id: 1
+      firstName: 'User 2'
+      patronMik: 'patronMik'
+      phoneNumber: '0501235466'
+      email: 'orderexample@gmail.com'
+      comment: 'Comments'
+      cityName: 'Dnipro'
+      paymentMethod: 'By card'
+      products: [
+        {
+        id: 2
+        product: 'Product 5'
+        productId: 5
+        order: 1
+        blockId: 3
+        }
+      ]
+    }
+  ]
   ```
   </details>
 </details>
