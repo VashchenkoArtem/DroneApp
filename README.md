@@ -205,6 +205,42 @@ POST /products
   | 201 | Succes created \| Успішно створено |
   | 422 | Not enough information \| Недостатньо інформації |
   | 500 | Server error \| Внутрішня помилка сервера |
+
+<details>
+<summary>Тіло запиту | Body</summary>
+
+```json
+{
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1,
+    "blocks": [
+      {
+        "id": 1,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "left",
+        "image": "design.png",
+        "blockOrder": 1,
+        "productId": 1
+      },
+      {
+        "id": 2,
+        "title": "Дизайн",
+        "description": "Міцний титановий корпус та тонкі рамки",
+        "blockAlign": "center",
+        "image": "design.png",
+        "blockOrder": 2,
+        "productId": 1
+}
+```
+</details>
+  
 <details>
 <summary>Відповідь | Response</summary>
 
@@ -767,11 +803,11 @@ PATCH /products/:id
       paymentMethod: 'By card'
       products: [
         {
-        id: 2
-        product: 'Product 5'
-        productId: 5
-        order: 1
-        blockId: 3
+          id: 2
+          product: 'Product 5'
+          productId: 5
+          order: 1
+          blockId: 3
         }
       ]
     }
