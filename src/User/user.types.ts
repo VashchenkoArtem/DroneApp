@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { Prisma } from "@prisma/client"
+import { Or } from "@prisma/client/runtime/library";
 
 
 export type User = Prisma.UserGetPayload<{}>
@@ -43,6 +44,8 @@ export type CreateAddress = Prisma.AddressCreateWithoutUserInput
 
 export type UpdateAddress = Prisma.AddressUpdateInput
 
+export type Order = Prisma.OrderGetPayload<{}>
+
 export interface IUserControllerContract {
     registration: (
         // {message: string}
@@ -83,6 +86,16 @@ export interface IUserControllerContract {
         req: Request<{userId: number}, Address[] | string, object>,
         res: Response<Address[] | string>
     ) => void,
+
+    getUserDeliveryById: (
+        req: Request<{adressId: number}, Address | string, object>,
+        res: Response<Address | string>
+    ) => void,
+
+    getUserOrders: (
+        req: Request<{userId: number}, Order[] | string, object>,
+        res: Response<Order[] | string>
+    ) => void,
     
 }
   
@@ -98,6 +111,9 @@ export interface IUserServiceContract {
     deleteAdress: (id: number) => Promise<Address | string>
     updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>
     getUserDeliveries: (userId: number) => Promise<Address[] | string>
+
+    getUserDeliveryById: (id: number) => Promise<Address | string>
+    getUserOrders: (userId: number) => Promise<Order[] | string>
 }
 
 export interface IUserRepositoryContract {
@@ -111,4 +127,6 @@ export interface IUserRepositoryContract {
     updateAdress: (adressId: number, data: UpdateAddress) => Promise<Address>
     getUserDeliveries: (userId: number) => Promise<Address[]>
     
+    getUserDeliveryById: (adressId: number) => Promise<Address | null>
+    getUserOrders: (userId: number) => Promise<Order[]>
 }

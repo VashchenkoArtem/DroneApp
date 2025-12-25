@@ -87,6 +87,19 @@ export const UserService: IUserServiceContract = {
         return userDeliveries
     },
 
-    
+    getUserDeliveryById: async(id) => {
+        const delivery = await UserRepository.getUserDeliveryById(id)
+
+        if (!delivery){
+            return "Delivery with this id cannot be found"
+        }
+
+        return delivery
+    },
+
+    getUserOrders: async(userId) => {
+        const userOrders = await UserRepository.getUserOrders(userId)
+        return userOrders
+    }
     
 }

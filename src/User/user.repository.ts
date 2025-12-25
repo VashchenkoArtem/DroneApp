@@ -15,7 +15,7 @@ export const UserRepository: IUserRepositoryContract = {
                     id: true,
                     firstName: true,
                     lastName: true,
-                    patronymic: true,
+                    patronMik: true,
                     email: true,
                     birthDate: true,
                     phoneNumber: true,
@@ -72,7 +72,7 @@ export const UserRepository: IUserRepositoryContract = {
                     id: true,
                     firstName: true,
                     lastName: true,
-                    patronymic: true,
+                    patronMik: true,
                     email: true,
                     birthDate: true,
                     phoneNumber: true,
@@ -133,6 +133,33 @@ export const UserRepository: IUserRepositoryContract = {
             })
             return userDelivery
         } catch (error){
+            throw error
+        }
+    },
+
+    getUserDeliveryById: async (adressId) => {
+        try {
+            const delivery = await client.delivery.findUnique({
+                where: { 
+                    id: Number(adressId) 
+                }
+            })
+            if (!delivery) return null
+            return delivery
+        } catch (error) {
+            throw error
+        }
+    },
+
+    getUserOrders: async(userId) => {
+        try {
+            const userOrders = await client.order.findMany({
+                where: {
+                    id: userId
+                }
+            })
+            return userOrders
+        } catch (error) {
             throw error
         }
     }
