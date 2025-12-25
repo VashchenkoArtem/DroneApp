@@ -24,20 +24,20 @@ model User {
   birthDate    DateTime
   phoneNumber  String
 
-  deliveries   Address[]
+  // deliveries   Address[]
 }
 
-model Address {
-  id            Int    @id @default(autoincrement())
-  city          String
-  street        String
-  numberOfHouse Int
-  numberOfFlat  Int
-  entrance      Int
-  status        String
-  userId Int
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// model Address {
+//   id            Int    @id @default(autoincrement())
+//   city          String
+//   street        String
+//   numberOfHouse Int
+//   numberOfFlat  Int
+//   entrance      Int
+//   status        String
+//   userId Int
+//   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
 
 
 model Product {

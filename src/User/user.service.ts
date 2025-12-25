@@ -1,3 +1,4 @@
+import nodemailer from 'nodemailer';
 import { ENV } from "../config/env";
 import { UserRepository } from "./user.repository";
 import { IUserServiceContract } from "./user.types";
@@ -61,32 +62,69 @@ export const UserService: IUserServiceContract = {
         return foundedUser
     },
 
-    createAdress: async(data, userId) => {
-        const adress = await UserRepository.createAdress(data, userId)
-        if (!adress) {
-            return 'Adress was not found. Try another adress.'
+    // createAddress: async(data, userId) => {
+    //     const adress = await UserRepository.createAddress(data, userId)
+    //     if (!adress) {
+    //         return 'Adress was not found. Try another adress.'
+    //     }
+    //     return adress
+    // },
+
+    // deleteAddress: async (data) => {
+    //     const adress = await UserRepository.deleteAddress(data)
+    //     if (!adress) {
+    //         return 'Adress was not found. Try another adress.'
+    //     }
+    //     return adress
+    // },
+
+    // updateAddress: async(adressId, data) => {
+    //     const updatedAdress = await UserRepository.updateAddress(adressId, data)
+    //     return updatedAdress
+    // },
+
+    // getUserDeliveries: async(userId) => {
+    //     const userDeliveries = await UserRepository.getUserDeliveries(userId)
+    //     return userDeliveries
+    // },
+
+    sendContactMessage: async (userId, data) => {
+        try {
+            const user = await UserRepository.findUserByIdWithoutPassword(userId);
+            
+            if (!user) {
+                return "User not found. Please log in again.";
+            }
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: ENV.MAIL_USER, // Ваша системна пошта (відправник)
+                    pass: ENV.MAIL_PASS  // Пароль додатка
+                }
+            });
+            await transporter.sendMail({
+                from: ENV.MAIL_USER,
+                to: ENV.ADMIN_EMAIL, // Пошта адміністратора, куди прийде лист
+                replyTo: user.email, // ВАЖЛИВО: пошта користувача з БД (для відповіді)
+                subject: `Нове повідомлення від ${user.firstName} ${user.lastName}`,
+                html: `
+                    <div style="font-family: sans-serif; line-height: 1.5;">
+                        <h2>Звернення через контактну форму</h2>
+                        <p><b>Від кого:</b> ${user.firstName} ${user.lastName}</p>
+                        <p><b>Email користувача (з профілю):</b> <a href="mailto:${user.email}">${user.email}</a></p>
+                        <p><b>Телефон (з форми):</b> ${data.phone}</p>
+                        <hr />
+                        <p><b>Повідомлення:</b></p>
+                        <p style="background: #f4f4f4; padding: 15px; border-radius: 5px;">${data.message}</p>
+                    </div>
+                `
+            });
+
+            return { success: true };
+        } catch (error) {
+            console.error("Mail service error:", error);
+            return "Failed to send email";
         }
-        return adress
-    },
-
-    deleteAdress: async (data) => {
-        const adress = await UserRepository.deleteAdress(data)
-        if (!adress) {
-            return 'Adress was not found. Try another adress.'
-        }
-        return adress
-    },
-
-    updateAdress: async(adressId, data) => {
-        const updatedAdress = await UserRepository.updateAdress(adressId, data)
-        return updatedAdress
-    },
-
-    getUserDeliveries: async(userId) => {
-        const userDeliveries = await UserRepository.getUserDeliveries(userId)
-        return userDeliveries
-    },
-
-    
+    }
     
 }
