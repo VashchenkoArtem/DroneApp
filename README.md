@@ -218,25 +218,7 @@ POST /products
     "image": "iphone-15-pro.png",
     "description": "Iphone 15",
     "count": 35,
-    "categoryId": 1,
-    "blocks": [
-      {
-        "id": 1,
-        "title": "Дизайн",
-        "description": "Міцний титановий корпус та тонкі рамки",
-        "blockAlign": "left",
-        "image": "design.png",
-        "blockOrder": 1,
-        "productId": 1
-      },
-      {
-        "id": 2,
-        "title": "Дизайн",
-        "description": "Міцний титановий корпус та тонкі рамки",
-        "blockAlign": "center",
-        "image": "design.png",
-        "blockOrder": 2,
-        "productId": 1
+    "categoryId": 1
 }
 ```
 </details>
