@@ -763,14 +763,14 @@ PATCH /products/:id
 
   ```json
   {
-    id: 4
-    city: 'Dnipro'
-    street: 'Street Name'
-    numberOfHouse: 5
-    numberOfFlat: 563
-    entrance: 2
-    status: 'Delivered'
-    userId: 1
+    "id": 4,
+    "city": "Dnipro",
+    "street": "Street Name",
+    "numberOfHouse": 5,
+    "numberOfFlat": 563,
+    "entrance": 2,
+    "status": "Delivered",
+    "userId": 1
   }
   ```
   </details>
@@ -793,21 +793,21 @@ PATCH /products/:id
   ```json
   [
     {
-      id: 1
-      firstName: 'User 2'
-      patronMik: 'patronMik'
-      phoneNumber: '0501235466'
-      email: 'orderexample@gmail.com'
-      comment: 'Comments'
-      cityName: 'Dnipro'
-      paymentMethod: 'By card'
-      products: [
+      "id": 1,
+      "firstName": "User 2",
+      "patronMik": "patronMik",
+      "phoneNumber": "0501235466",
+      "email": "orderexample@gmail.com",
+      "comment": "Comments",
+      "cityName": "Dnipro",
+      "paymentMethod": "By card",
+      "products": [
         {
-          id: 2
-          product: 'Product 5'
-          productId: 5
-          order: 1
-          blockId: 3
+          "id": 2,
+          "product": "Product 5",
+          "productId": 5,
+          "order": 1,
+          "blockId": 3
         }
       ]
     }
