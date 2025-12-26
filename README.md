@@ -205,6 +205,24 @@ POST /products
   | 201 | Succes created \| Успішно створено |
   | 422 | Not enough information \| Недостатньо інформації |
   | 500 | Server error \| Внутрішня помилка сервера |
+
+<details>
+<summary>Тіло запиту | Body</summary>
+
+```json
+{
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1
+}
+```
+</details>
+  
 <details>
 <summary>Відповідь | Response</summary>
 
@@ -365,7 +383,24 @@ PATCH /products/:id
   | 400 | Incorrect request \| Некоректий запит |
   | 422 | Not enough information \| Недостатньо інформації |
   | 500 | Server error \| Внутрішня помилка сервера |
-  
+
+<details>
+<summary>Тіло запиту | Request Body</summary>
+
+```json
+{
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "price": 45999,
+    "discount": 50,
+    "image": "iphone-15-pro.png",
+    "description": "Iphone 15",
+    "count": 35,
+    "categoryId": 1
+}
+```
+</details>
+
 <details>
 <summary>Відповідь | Response</summary>
 
@@ -400,6 +435,21 @@ PATCH /products/:id
   | 201 | Created successful \| Успішно створено |
   | 401 | Not authorized \| Не авторизований |
 
+<details>
+  <summary>Тіло запиту | Body</summary>
+
+  ```json
+  {
+      "firstName": "First Name",
+      "patronMik": "Patron Mik",
+      "lastName": "Second Name",
+      "email": "asdasdadasda@gmail.com",
+      "birthDate": "2024-12-24T06:22:33.444Z",
+      "phoneNumber": "123123121"
+  }
+  ```
+  </details>
+
   <details>
   <summary>Відповідь | Response</summary>
 
@@ -422,6 +472,18 @@ PATCH /products/:id
   | 404 | Not found \| Не знайдено |
   | 422 | Not enough information \| Недостатньо інформації |
   | 500 | Server error \| Внутрішня помилка сервера |
+
+
+  <details>
+  <summary>Тіло запиту | Body</summary>
+
+  ```json
+  {
+    email: 'asdasdadasda@gmail.com'
+    password: '64134578AA'
+  }
+  ```
+  </details>
 
   <details>
   <summary>Відповідь | Response</summary>
@@ -475,6 +537,23 @@ PATCH /products/:id
   | 401 | Not authorized \| Не авторизований |
 
   <details>
+  <summary>Тіло запиту | Body</summary>
+
+  ```json
+  {
+      "id": 6,
+      "firstName": "Updated First Name",
+      "patronMik": "Updated Patron Mik",
+      "lastName": "Updated Second Name",
+      "email": "asdasdadasda@gmail.com",
+      "birthDate": "2024-12-24T06:22:33.444Z",
+      "phoneNumber": "123123121",
+      "deliveries": []
+  }
+  ```
+  </details>
+
+  <details>
   <summary>Відповідь | Response</summary>
 
   ```json
@@ -501,6 +580,23 @@ PATCH /products/:id
   | **Status-code \| Статус-код** | **Description \| Опис** |
   | --- | --- |
   | 201 | Succes created \| Успішно створено |
+
+  <details>
+  <summary>Тіло запиту | Body</summary>
+
+  ```json
+  {
+      "id": 9,
+      "firstName": "UHG",
+      "patronMik": "asdasda",
+      "lastName": "asdsad",
+      "phoneNumber": "123123121",
+      "email": "asdasdadasda@gmail.com",
+      "city": "Dnipro",
+      "userId": 6
+  }
+  ```
+  </details>
 
   <details>
   <summary>Відповідь | Response</summary>
@@ -558,19 +654,146 @@ PATCH /products/:id
   | 200 | Success \| Успіх |
 
   <details>
+  <summary>Тіло запиту | Body</summary>
+
+  ```json
+  {
+      "id": 10,
+      "firstName": "User 1",
+      "patronMik": "patronMik",
+      "lastName": "Last Name",
+      "phoneNumber": "123123121",
+      "email": "userexample@gmail.com",
+      "city": "Dnipro",
+      "userId": 4
+  }
+  ```
+  </details>
+
+  <details>
   <summary>Відповідь | Response</summary>
 
   ```json
   {
-      "id": 9,
-      "firstName": "UHG",
-      "patronMik": "asdasda",
-      "lastName": "asdsad",
+      "id": 10,
+      "firstName": "User 1",
+      "patronMik": "patronMik",
+      "lastName": "Last Name",
       "phoneNumber": "123123121",
-      "email": "asdasdadasda@gmail.com",
+      "email": "userexample@gmail.com",
       "city": "Dnipro",
-      "userId": 6
+      "userId": 4
   }
+  ```
+  </details>
+
+  ### Отримання адрес доставок користувача | Getting user deliveries addresses
+
+  ```
+  GET /users/:userId/addresses
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 401 | Invalid type \| Неправильний тип даних userId |
+  | 404 | No delivery address found \| Адреси доставок не було знайдено |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  [
+    {
+        "id": 10,
+        "firstName": "User 1",
+        "patronMik": "patronMik",
+        "lastName": "Last Name",
+        "phoneNumber": "123123121",
+        "email": "userexample@gmail.com",
+        "city": "Dnipro",
+        "userId": 4
+    },
+
+    {
+        "id": 11,
+        "firstName": "User 2",
+        "patronMik": "patronMik",
+        "lastName": "Last Name",
+        "phoneNumber": "123123121",
+        "email": "userexample@gmail.com",
+        "city": "Dnipro",
+        "userId": 5
+    }
+  ]
+  ```
+  </details>
+
+  ### Отримання адреси доставки по id | Getting delivery address by id
+
+  ```
+  GET /users/addresses/:addressId
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 404 | Delivery not found \| Користувач ще не має замовлень |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  {
+    "id": 4,
+    "city": "Dnipro",
+    "street": "Street Name",
+    "numberOfHouse": 5,
+    "numberOfFlat": 563,
+    "entrance": 2,
+    "status": "Delivered",
+    "userId": 1
+  }
+  ```
+  </details>
+
+  ### Отримання замовлень користувача | Getting user orders
+
+  ```
+  GET /users/:userId/orders
+  ```
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 401 | Invalid type \| Неправильний тип даних userId |
+  | 404 | No deliveries found \| Замовлень не було знайдено |
+
+  <details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  [
+    {
+      "id": 1,
+      "firstName": "User 2",
+      "patronMik": "patronMik",
+      "phoneNumber": "0501235466",
+      "email": "orderexample@gmail.com",
+      "comment": "Comments",
+      "cityName": "Dnipro",
+      "paymentMethod": "By card",
+      "products": [
+        {
+          "id": 2,
+          "product": "Product 5",
+          "productId": 5,
+          "order": 1,
+          "blockId": 3
+        }
+      ]
+    }
+  ]
   ```
   </details>
 </details>
