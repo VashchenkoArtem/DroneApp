@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { IUserRepositoryContract, UserWithoutPassword } from "./user.types";
+import e from "express";
 
 
 const client = new PrismaClient();
@@ -172,4 +173,18 @@ export const UserRepository: IUserRepositoryContract = {
         }catch(error){
             throw error
         }
-    }}
+    },
+    checkAndResetPassword: async (email, newHashedPassword) => {
+        try{
+            const newPassword = await client.user.update({
+                where: {
+                    email: email
+                },
+                data: {
+                    password: newHashedPassword
+                }
+            })
+        }catch(error){
+        }
+    }
+}

@@ -62,42 +62,37 @@ export const UserService: IUserServiceContract = {
         return foundedUser
     },
     sendContactMessage: async (userId, data) => {
-        try {
-            const user = await UserRepository.findUserByIdWithoutPassword(userId);
-            
-            if (!user) {
-                return "User not found. Please log in again.";
-            }
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: ENV.MAIL_USER, // Ваша системна пошта (відправник)
-                    pass: ENV.MAIL_PASS  // Пароль додатка
-                }
-            });
-            await transporter.sendMail({
-                from: ENV.MAIL_USER,
-                to: ENV.ADMIN_EMAIL, // Пошта адміністратора, куди прийде лист
-                replyTo: user.email, // ВАЖЛИВО: пошта користувача з БД (для відповіді)
-                subject: `Нове повідомлення від ${user.firstName} ${user.lastName}`,
-                html: `
-                    <div style="font-family: sans-serif; line-height: 1.5;">
-                        <h2>Звернення через контактну форму</h2>
-                        <p><b>Від кого:</b> ${user.firstName} ${user.lastName}</p>
-                        <p><b>Email користувача (з профілю):</b> <a href="mailto:${user.email}">${user.email}</a></p>
-                        <p><b>Телефон (з форми):</b> ${data.phone}</p>
-                        <hr />
-                        <p><b>Повідомлення:</b></p>
-                        <p style="background: #f4f4f4; padding: 15px; border-radius: 5px;">${data.message}</p>
-                    </div>
-                `
-            });
-
-            return { success: true };
-        } catch (error) {
-            console.error("Mail service error:", error);
-            return "Failed to send email";
+        const user = await UserRepository.findUserByIdWithoutPassword(userId);
+        
+        if (!user) {
+            return "User not found. Please log in again.";
         }
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: ENV.MAIL_USER,
+                pass: ENV.MAIL_PASS 
+            }
+        });
+        await transporter.sendMail({
+            from: ENV.MAIL_USER,
+            to: ENV.ADMIN_EMAIL,
+            replyTo: user.email,
+            subject: `Нове повідомлення від ${user.firstName} ${user.lastName}`,
+            html: `
+                <div style="font-family: sans-serif; line-height: 1.5;">
+                    <h2>Звернення через контактну форму</h2>
+                    <p><b>Від кого:</b> ${user.firstName} ${user.lastName}</p>
+                    <p><b>Email користувача (з профілю):</b> <a href="mailto:${user.email}">${user.email}</a></p>
+                    <p><b>Телефон (з профілю):</b> ${user.phoneNumber}</p>
+                    <hr />
+                    <p><b>Повідомлення:</b></p>
+                    <p style="background: #f4f4f4; padding: 15px; border-radius: 5px;">${data.message}</p>
+                </div>
+            `
+        });
+
+        return { success: true };
     },
     deleteAdress: async (data) => {
         const adress = await UserRepository.deleteAdress(data)
@@ -142,5 +137,34 @@ export const UserService: IUserServiceContract = {
         }
         return adress
     },
-    
+    sendCodeToEmail: async (data) => {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: ENV.MAIL_USER,
+                pass: ENV.MAIL_PASS 
+            }
+        });
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        await transporter.sendMail({
+            from: ENV.MAIL_USER,
+            to: data.email,
+            replyTo: data.email,
+            subject: `Reset password code`,
+            html: `
+            <h1>Your password reset code:</h1>
+            <a style="color: blue;">http://127.0.0.1:8000/users/recovery-password?code=${code}</a>
+            `
+        });
+        return "Code sent to email successfully. Please, check your inbox.";
+    },
+    checkAndResetPassword: async (data, codeFromEmail) => {
+        console.log(data.code, codeFromEmail);
+        if (data.code != codeFromEmail) {
+            return "Invalid code. Please try again.";
+        }
+        const hashedPassword = await hash(data.password, 10);
+        await UserRepository.checkAndResetPassword(data.email, hashedPassword);
+        return "Password has been successfully updated.";
+    }
 }

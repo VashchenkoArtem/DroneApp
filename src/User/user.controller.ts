@@ -140,5 +140,15 @@ export const userController: IUserControllerContract = {
         const response = await UserService.createAdress(body, userId)
         res.status(201).json(response)
     },
-
+    sendCodeToEmail: async (req, res) => {
+        const body = req.body
+        const response = await UserService.sendCodeToEmail(body)
+        res.status(200).json(response)
+    },
+    checkAndResetPassword: async (req, res) => {
+        const codeFromEmail = req.query.code;
+        const body = req.body
+        const response = await UserService.checkAndResetPassword(body, codeFromEmail)
+        res.status(200).json(response)
+    }
 };

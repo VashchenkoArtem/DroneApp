@@ -43,7 +43,6 @@ export interface ErrorResponse {
 // export type UpdateAddress = Prisma.AddressUpdateInput;
 
 export interface IContactFormBody {
-    phone: string;
     message: string;
 }
 export type Address = Prisma.AddressGetPayload<{}>
@@ -53,6 +52,11 @@ export type UpdateAddress = Prisma.AddressUpdateInput
 export type Order = Prisma.OrderGetPayload<{}>
 export type CreateOrder = Prisma.OrderUncheckedCreateInput
 
+export type passwordForm = {
+    password: string,
+    code: string,
+    email: string
+}
 export interface IUserControllerContract {
     registration: (
         // {message: string}
@@ -111,6 +115,14 @@ export interface IUserControllerContract {
     createOrder: (
         req: Request<object, Order | string, CreateOrder, object>,
         res: Response<Order | string>
+    ) => void,
+    sendCodeToEmail: (
+        req: Request<object, string, {email: string}, object>,
+        res: Response<string>
+    ) => void,
+    checkAndResetPassword: (
+        req: Request<object, string, passwordForm, {code: string}>,
+        res: Response<string>
     ) => void
 }
   
@@ -130,6 +142,9 @@ export interface IUserServiceContract {
     getUserDeliveryById: (id: number) => Promise<Address | string>
     getUserOrders: (userId: number) => Promise<Order[] | string>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
+    sendCodeToEmail: (data: {email: string}) => Promise<string>
+    checkAndResetPassword: (data: passwordForm, codeFromEmail: string) => Promise<string>
+
 }
 
 export interface IUserRepositoryContract {
@@ -144,4 +159,5 @@ export interface IUserRepositoryContract {
     getUserDeliveryById: (adressId: number) => Promise<Address | null>
     getUserOrders: (userId: number) => Promise<Order[]>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order>
+    checkAndResetPassword: (email: string, newHashedPassword: string) => Promise<void>
 }

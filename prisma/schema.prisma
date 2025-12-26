@@ -103,4 +103,3 @@ model ProductSpecifications {
   product Product @relation(fields: [productId], references: [id])
   productId Int @unique
 }
-
