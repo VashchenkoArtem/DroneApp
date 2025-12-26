@@ -15,7 +15,7 @@ export const UserRepository: IUserRepositoryContract = {
                     id: true,
                     firstName: true,
                     lastName: true,
-                    patronMik: true,
+                    patronymic: true,
                     email: true,
                     birthDate: true,
                     phoneNumber: true,
@@ -72,7 +72,7 @@ export const UserRepository: IUserRepositoryContract = {
                     id: true,
                     firstName: true,
                     lastName: true,
-                    patronMik: true,
+                    patronymic: true,
                     email: true,
                     birthDate: true,
                     phoneNumber: true,
@@ -87,14 +87,14 @@ export const UserRepository: IUserRepositoryContract = {
     
     createAdress: async (data, userId) => {
         const createdAddress =  client.address.create({
-        data: {
-            city: data.city,
-            street: data.street,
-            numberOfHouse: data.numberOfHouse,
-            numberOfFlat: data.numberOfFlat,
-            entrance: data.entrance,
-            userId: userId
-        },
+            data: {
+                city: data.city,
+                street: data.street,
+                numberOfHouse: data.numberOfHouse,
+                numberOfFlat: data.numberOfFlat,
+                entrance: data.entrance,
+                userId: userId
+            },
     })
         return createdAddress
     },
@@ -139,7 +139,7 @@ export const UserRepository: IUserRepositoryContract = {
 
     getUserDeliveryById: async (adressId) => {
         try {
-            const delivery = await client.delivery.findUnique({
+            const delivery = await client.address.findUnique({
                 where: { 
                     id: Number(adressId) 
                 }
@@ -162,5 +162,17 @@ export const UserRepository: IUserRepositoryContract = {
         } catch (error) {
             throw error
         }
-    }
-};
+    },
+    createOrder: async(userId, data) => {
+        try {
+            const newOrder = await client.order.create({
+                data: {
+                    ...data,
+                    userId: userId
+                }
+            })
+            return newOrder
+        }catch(error){
+            throw error
+        }
+}}

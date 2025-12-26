@@ -45,6 +45,7 @@ export type CreateAddress = Prisma.AddressCreateWithoutUserInput
 export type UpdateAddress = Prisma.AddressUpdateInput
 
 export type Order = Prisma.OrderGetPayload<{}>
+export type CreateOrder = Prisma.OrderUncheckedCreateInput
 
 export interface IUserControllerContract {
     registration: (
@@ -96,7 +97,10 @@ export interface IUserControllerContract {
         req: Request<{userId: number}, Order[] | string, object>,
         res: Response<Order[] | string>
     ) => void,
-    
+    createOrder: (
+        req: Request<object, Order | string, CreateOrder, object>,
+        res: Response<Order | string>
+    ) => void
 }
   
 
@@ -111,9 +115,9 @@ export interface IUserServiceContract {
     deleteAdress: (id: number) => Promise<Address | string>
     updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>
     getUserDeliveries: (userId: number) => Promise<Address[] | string>
-
     getUserDeliveryById: (id: number) => Promise<Address | string>
     getUserOrders: (userId: number) => Promise<Order[] | string>
+    createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
 }
 
 export interface IUserRepositoryContract {
@@ -126,7 +130,7 @@ export interface IUserRepositoryContract {
     deleteAdress: (adressId: number) => Promise<Address>
     updateAdress: (adressId: number, data: UpdateAddress) => Promise<Address>
     getUserDeliveries: (userId: number) => Promise<Address[]>
-    
     getUserDeliveryById: (adressId: number) => Promise<Address | null>
     getUserOrders: (userId: number) => Promise<Order[]>
+    createOrder: (userId: number, data: CreateOrder) => Promise<Order>
 }

@@ -23,8 +23,8 @@ model User {
   password     String
   birthDate    DateTime
   phoneNumber  String
-
   deliveries   Address[]
+  orders Order[]
 }
 
 model Address {
@@ -34,7 +34,7 @@ model Address {
   numberOfHouse Int
   numberOfFlat  Int
   entrance      Int
-  status        String
+  status        String @default("Processing...")
   userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -53,6 +53,7 @@ model Product {
   specifications ProductSpecifications?
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
+
 }
 model ProductBlock {
   id Int @id @unique @default(autoincrement())
@@ -87,6 +88,8 @@ model Order{
   cityName String
   paymentMethod String
   products ProductOnOrder[]
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
 
 model ProductSpecifications {

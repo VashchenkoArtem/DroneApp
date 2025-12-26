@@ -118,5 +118,11 @@ export const userController: IUserControllerContract = {
         }
 
         res.status(200).json(userOrders)
+    },
+    createOrder: async (req, res) => {
+        const userId = res.locals.userId;
+        const body = req.body;
+        const response = await UserService.createOrder(userId, body)
+        res.status(201).json(response)
     }
 };

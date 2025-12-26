@@ -100,6 +100,10 @@ export const UserService: IUserServiceContract = {
     getUserOrders: async(userId) => {
         const userOrders = await UserRepository.getUserOrders(userId)
         return userOrders
+    },
+    createOrder: async(userId, data) => {
+        const newOrder = await UserRepository.createOrder(userId, data)
+        return newOrder
     }
     
 }
