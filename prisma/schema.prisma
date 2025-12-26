@@ -35,7 +35,7 @@ model Address {
   numberOfFlat  Int
   entrance      Int
   status        String
-  userId Int
+  userId        Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
