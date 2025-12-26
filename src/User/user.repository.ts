@@ -84,57 +84,92 @@ export const UserRepository: IUserRepositoryContract = {
             throw error
         }
     },
-    
-    // createAddress: async (data, userId) => {
-    //     const createdAddress =  client.address.create({
-    //     data: {
-    //         city: data.city,
-    //         street: data.street,
-    //         numberOfHouse: data.numberOfHouse,
-    //         numberOfFlat: data.numberOfFlat,
-    //         entrance: data.entrance,
-    //         userId: userId
-    //     },
-    // })
-    //     return createdAddress
-    // },
+    createAdress: async (data, userId) => {
+        const createdAddress =  client.address.create({
+            data: {
+                city: data.city,
+                street: data.street,
+                numberOfHouse: data.numberOfHouse,
+                numberOfFlat: data.numberOfFlat,
+                entrance: data.entrance,
+                userId: userId
+            },
+    })
+        return createdAddress
+    },
+    getUserDeliveries: async (userId) => {
+        try {
+            const userDelivery = await client.address.findMany({
+                where: {
+                    userId: userId
+                }
+            })
+            return userDelivery
+        } catch (error){
+            throw error
+        }
+    },
 
-    // deleteAddress: async(addressId) => {
-    //     try{
-    //         const deletedDelivery = await client.address.delete({
-    //             where: {
-    //                 id: addressId
-    //             }
-    //         })
-    //         return deletedDelivery
-    //     }catch(error){
-    //         throw error
-    //     }
-    // },
-    // updateAddress: async (addressId, data)=>{
-    //     try{
-    //         const updatedAdress = await client.address.update({
-    //             where: {
-    //                 id: addressId
-    //             },data:data
-    //         })
-    //         return updatedAdress
-    //     }catch(error){
-    //         throw error
-    //     }
-    // },
+    getUserDeliveryById: async (adressId) => {
+        try {
+            const delivery = await client.address.findUnique({
+                where: { 
+                    id: Number(adressId) 
+                }
+            })
+            if (!delivery) return null
+            return delivery
+        } catch (error) {
+            throw error
+        }
+    },
 
-    // getUserDeliveries: async (userId) => {
-    //     try {
-    //         const userDelivery = await client.address.findMany({
-    //             where: {
-    //                 userId: userId
-    //             }
-    //         })
-    //         return userDelivery
-    //     } catch (error){
-    //         throw error
-    //     }
-    // },
-
-};
+    getUserOrders: async(userId) => {
+        try {
+            const userOrders = await client.order.findMany({
+                where: {
+                    userId: userId
+                }
+            })
+            return userOrders
+        } catch (error) {
+            throw error
+        }
+    },
+    createOrder: async(userId, data) => {
+        try {
+            const newOrder = await client.order.create({
+                data: {
+                    ...data,
+                    userId: userId
+                }
+            })
+            return newOrder
+        }catch(error){
+            throw error
+        }
+},
+    deleteAdress: async(adressId) => {
+        try{
+            const deletedDelivery = await client.address.delete({
+                where: {
+                    id: adressId
+                }
+            })
+            return deletedDelivery
+        }catch(error){
+            throw error
+        }
+    },
+    updateAdress: async (adressId, data)=>{
+        try{
+            const updatedAdress = await client.address.update({
+                where: {
+                    id: adressId
+                },data:data
+            })
+            return updatedAdress
+        }catch(error){
+            throw error
+        }
+    }}

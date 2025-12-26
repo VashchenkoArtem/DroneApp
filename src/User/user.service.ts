@@ -61,33 +61,6 @@ export const UserService: IUserServiceContract = {
         }
         return foundedUser
     },
-
-    // createAddress: async(data, userId) => {
-    //     const adress = await UserRepository.createAddress(data, userId)
-    //     if (!adress) {
-    //         return 'Adress was not found. Try another adress.'
-    //     }
-    //     return adress
-    // },
-
-    // deleteAddress: async (data) => {
-    //     const adress = await UserRepository.deleteAddress(data)
-    //     if (!adress) {
-    //         return 'Adress was not found. Try another adress.'
-    //     }
-    //     return adress
-    // },
-
-    // updateAddress: async(adressId, data) => {
-    //     const updatedAdress = await UserRepository.updateAddress(adressId, data)
-    //     return updatedAdress
-    // },
-
-    // getUserDeliveries: async(userId) => {
-    //     const userDeliveries = await UserRepository.getUserDeliveries(userId)
-    //     return userDeliveries
-    // },
-
     sendContactMessage: async (userId, data) => {
         try {
             const user = await UserRepository.findUserByIdWithoutPassword(userId);
@@ -125,6 +98,49 @@ export const UserService: IUserServiceContract = {
             console.error("Mail service error:", error);
             return "Failed to send email";
         }
-    }
+    },
+    deleteAdress: async (data) => {
+        const adress = await UserRepository.deleteAdress(data)
+        if (!adress) {
+            return 'Adress was not found. Try another adress.'
+        }
+        return adress
+    },
+
+    updateAdress: async(adressId, data) => {
+        const updatedAdress = await UserRepository.updateAdress(adressId, data)
+        return updatedAdress
+    },
+
+    getUserDeliveries: async(userId) => {
+        const userDeliveries = await UserRepository.getUserDeliveries(userId)
+        return userDeliveries
+    },
+
+    getUserDeliveryById: async(id) => {
+        const delivery = await UserRepository.getUserDeliveryById(id)
+
+        if (!delivery){
+            return "Delivery with this id cannot be found"
+        }
+
+        return delivery
+    },
+
+    getUserOrders: async(userId) => {
+        const userOrders = await UserRepository.getUserOrders(userId)
+        return userOrders
+    },
+    createOrder: async(userId, data) => {
+        const newOrder = await UserRepository.createOrder(userId, data)
+        return newOrder
+    },
+    createAdress: async(data, userId) => {
+        const adress = await UserRepository.createAdress(data, userId)
+        if (!adress) {
+            return 'Adress was not found. Try another adress.'
+        }
+        return adress
+    },
     
 }

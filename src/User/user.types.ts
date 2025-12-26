@@ -46,6 +46,12 @@ export interface IContactFormBody {
     phone: string;
     message: string;
 }
+export type Address = Prisma.AddressGetPayload<{}>
+export type CreateAddress = Prisma.AddressCreateWithoutUserInput
+export type UpdateAddress = Prisma.AddressUpdateInput
+
+export type Order = Prisma.OrderGetPayload<{}>
+export type CreateOrder = Prisma.OrderUncheckedCreateInput
 
 export interface IUserControllerContract {
     registration: (
@@ -71,27 +77,41 @@ export interface IUserControllerContract {
         req: Request<object, UserWithoutPassword | string, object, object, {userId: number}>, 
         res: Response<UserWithoutPassword | string>
     ) => Promise<Response | void>;
-    // createAddress: (
-    //     req: Request<object, Address | string, CreateAddress, object>,
-    //     res: Response<Address | string>
-    // ) => void;
-    // deleteAddress: (
-    //     req: Request<{addressId: string}, Address | string, object >,
-    //     res: Response<Address | string>
-    // ) => void;
-    // updateAddress: (
-    //     req: Request<{addressId: string}, Address | string, UpdateAddress>,
-    //     res: Response<Address | string>
-    // ) => void;
-    // getUserDeliveries: (
-    //     req: Request<{userId: number}, Address[] | string, object>,
-    //     res: Response<Address[] | string>
-    // ) => void;
     sendContactMessage: (
         req: Request<object, { success: boolean } | string, IContactFormBody>,
         res: Response<{ success: boolean } | string>
     ) => Promise<void>;
     
+    createAdress: (
+        req: Request<object, Address | string, CreateAddress, object>,
+        res: Response<Address | string>
+    ) => void,
+    deleteAdress: (
+        req: Request<{addressId: number}, Address | string, object >,
+        res: Response<Address | string>
+    ) => void,
+    updateAdress: (
+        req: Request<{adressId: number}, Address | string, UpdateAddress>,
+        res: Response<Address | string>
+    ) => void, 
+    getUserDeliveries: (
+        req: Request<{userId: number}, Address[] | string, object>,
+        res: Response<Address[] | string>
+    ) => void,
+
+    getUserDeliveryById: (
+        req: Request<{adressId: number}, Address | string, object>,
+        res: Response<Address | string>
+    ) => void,
+
+    getUserOrders: (
+        req: Request<{userId: number}, Order[] | string, object>,
+        res: Response<Order[] | string>
+    ) => void,
+    createOrder: (
+        req: Request<object, Order | string, CreateOrder, object>,
+        res: Response<Order | string>
+    ) => void
 }
   
 
@@ -102,11 +122,14 @@ export interface IUserServiceContract {
     updateUser: (data: UpdateUser, id: number) => Promise<UserWithoutPassword | string>
     login: (data: UserLogin) => Promise<AuthToken | string>
     me: (id: number) => Promise<UserWithoutPassword | string>
-    // createAddress: (data: CreateAddress, userId: number) => Promise<Address | string> 
-    // deleteAddress: (id: number) => Promise<Address | string>
-    // updateAddress: (id: number, data: UpdateAddress) => Promise<Address | string>
-    // getUserDeliveries: (userId: number) => Promise<Address[] | string>
     sendContactMessage: (userId: number, data: IContactFormBody) => Promise<{ success: boolean } | string>;
+    createAdress: (data: CreateAddress, userId: number) => Promise<Address | string> 
+    deleteAdress: (id: number) => Promise<Address | string>
+    updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>
+    getUserDeliveries: (userId: number) => Promise<Address[] | string>
+    getUserDeliveryById: (id: number) => Promise<Address | string>
+    getUserOrders: (userId: number) => Promise<Order[] | string>
+    createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
 }
 
 export interface IUserRepositoryContract {
@@ -114,8 +137,11 @@ export interface IUserRepositoryContract {
     createUser: (dataWithHashedPassword: CreateUser) => Promise<UserWithoutPassword>
     updateUser: (id: number, data: UpdateUser) => Promise<UserWithoutPassword>
     findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
-    // createAddress: (data: CreateAddress, userId: number) => Promise<Address | null>
-    // deleteAddress: (addressId: number) => Promise<Address>
-    // updateAddress: (addressId: number, data: UpdateAddress) => Promise<Address>
-    // getUserDeliveries: (userId: number) => Promise<Address[]>
+    createAdress: (data: CreateAddress, userId: number) => Promise<Address | null>
+    deleteAdress: (adressId: number) => Promise<Address>
+    updateAdress: (adressId: number, data: UpdateAddress) => Promise<Address>
+    getUserDeliveries: (userId: number) => Promise<Address[]>
+    getUserDeliveryById: (adressId: number) => Promise<Address | null>
+    getUserOrders: (userId: number) => Promise<Order[]>
+    createOrder: (userId: number, data: CreateOrder) => Promise<Order>
 }
