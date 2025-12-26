@@ -8,9 +8,9 @@ router.post("/users/registration", userController.registration);
 router.post("/users/login", authMiddleware, userController.login);
 router.patch("/users/:id", userController.updateUser);
 router.get('/users/me', authMiddleware ,authMiddleware, userController.me);
-router.post('/users/addresses', authMiddleware, userController.createAdress);
-router.delete("/users/addresses/:addressId",  userController.deleteAdress)
-router.patch("/users/addresses/:addressId", userController.updateAdress)
-router.get("/users/:userId/addresses", userController.getUserDeliveries)
+// router.post('/users/addresses', authMiddleware, userController.createAddress);
+// router.delete("/users/addresses/:addressId",  userController.deleteAddress)
+// router.patch("/users/addresses/:addressId", userController.updateAddress)
+router.post("/users/contact", authMiddleware, userController.sendContactMessage);
 
 export default router;

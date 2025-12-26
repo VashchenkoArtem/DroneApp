@@ -24,7 +24,7 @@ model User {
   birthDate    DateTime
   phoneNumber  String
 
-  deliveries   Address[]
+  // deliveries   Address[]
 }
 
 model Address {

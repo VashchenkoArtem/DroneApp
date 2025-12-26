@@ -50,44 +50,68 @@ export const userController: IUserControllerContract = {
         res.status(200).json(me);
         
     },
-    createAdress: async (req, res) => {
+    // createAddress: async (req, res) => {
+    //     const userId = res.locals.userId;
+    //     const body = req.body;
+    //     const response = await UserService.createAddress(body, userId)
+    //     res.status(201).json(response)
+    // },
+
+    // deleteAddress: async (req, res) => {
+    //     const adressId = Number(req.params.addressId);
+    //     console.log(req.params.addressId)
+    //     const deletedAdress = await UserService.deleteAddress(adressId)
+
+    //     if (!deletedAdress) {
+    //         res.status(400).json('There was an error while deleting an adress')
+    //     }
+    //     res.status(200).json(deletedAdress)
+    // },
+
+    // updateAddress: async(req, res) => {
+    //     const body = req.body;
+    //     const adressId = Number(req.params.addressId)
+
+    //     const updateAdress = await UserService.updateAddress(adressId, body)
+    //     res.status(200).json(updateAdress)
+    // },
+
+    // getUserDeliveries: async(req, res) => {
+    //     const userId = Number(req.params.userId)    
+    //     if (Number.isNaN(userId)) {
+    //         res.status(401).json("Please, enter id correctly")
+    //         return;
+    //     }
+    //     const userDeliveries = await UserService.getUserDeliveries(userId);
+
+    //     if (!userDeliveries) {
+    //         res.status(404).json('User does not have any deliveries. Create one.');
+    //     }
+
+    //     res.status(200).json(userDeliveries);
+    // },
+
+    sendContactMessage: async (req, res) => {
         const userId = res.locals.userId;
         const body = req.body;
-        const response = await UserService.createAdress(body, userId)
-        res.status(201).json(response)
-    },
 
-    deleteAdress: async (req, res) => {
-        const adressId = Number(req.params.addressId);
-        console.log(req.params.addressId)
-        const deletedAdress = await UserService.deleteAdress(adressId)
-
-        if (!deletedAdress) {
-            res.status(400).json('There was an error while deleting an adress')
-        }
-        res.status(200).json(deletedAdress)
-    },
-
-    updateAdress: async(req, res) => {
-        const body = req.body;
-        const adressId = Number(req.params.adressId)
-
-        const updateAdress = await UserService.updateAdress(adressId, body)
-        res.status(200).json(updateAdress)
-    },
-
-    getUserDeliveries: async(req, res) => {
-        const userId = Number(req.params.userId)    
-        if (Number.isNaN(userId)) {
-            res.status(401).json("Please, enter id correctly")
+        if (!userId) {
+            res.status(401).json("Unauthorized");
             return;
         }
-        const userDeliveries = await UserService.getUserDeliveries(userId);
-
-        if (!userDeliveries) {
-            res.status(404).json('User does not have any deliveries. Create one.');
+        if (!body.phone || !body.message) {
+            res.status(422).json("Phone and message are required fields");
+            return;
         }
 
-        res.status(200).json(userDeliveries);
+        const response = await UserService.sendContactMessage(userId, body);
+
+        if (typeof response === "string") {
+            res.status(500).json(response);
+            return;
+        }
+
+        res.status(200).json(response);
     }
+
 };
