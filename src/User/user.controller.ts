@@ -77,7 +77,7 @@ export const userController: IUserControllerContract = {
     },
 
     getUserDeliveries: async(req, res) => {
-        const userId = Number(req.params.userId)    
+        const userId = res.locals.userId;
         if (Number.isNaN(userId)) {
             res.status(401).json("Please, enter id correctly")
             return;

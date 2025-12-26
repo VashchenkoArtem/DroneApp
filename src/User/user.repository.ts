@@ -155,7 +155,7 @@ export const UserRepository: IUserRepositoryContract = {
         try {
             const userOrders = await client.order.findMany({
                 where: {
-                    id: userId
+                    userId: userId
                 }
             })
             return userOrders

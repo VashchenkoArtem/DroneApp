@@ -81,7 +81,7 @@ model ProductOnOrder{
 model Order{
   id Int @id @unique @default(autoincrement())
   firstName String
-  patronMik String
+  patronymic String
   phoneNumber String
   email String
   comment String

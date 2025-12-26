@@ -39,9 +39,7 @@ export interface ErrorResponse {
     message: string;
 }
 export type Address = Prisma.AddressGetPayload<{}>
-
 export type CreateAddress = Prisma.AddressCreateWithoutUserInput
-
 export type UpdateAddress = Prisma.AddressUpdateInput
 
 export type Order = Prisma.OrderGetPayload<{}>

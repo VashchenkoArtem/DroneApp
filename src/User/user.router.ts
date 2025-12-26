@@ -11,9 +11,9 @@ router.get('/users/me', authMiddleware ,authMiddleware, userController.me);
 router.post('/users/addresses', authMiddleware, userController.createAdress);
 router.delete("/users/addresses/:addressId",  userController.deleteAdress)
 router.patch("/users/addresses/:addressId", userController.updateAdress)
-router.get("/users/:userId/addresses", userController.getUserDeliveries)
+router.get("/users/addresses", userController.getUserDeliveries)
 router.get('/users/addresses/:addressId', userController.getUserDeliveryById)
-router.get("/users/:userId/orders", userController.getUserOrders)
-
+router.get("/users/:userId/orders/", userController.getUserOrders)
+router.post("/users/orders", authMiddleware, userController.createOrder)
 
 export default router;
