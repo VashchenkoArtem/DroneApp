@@ -137,19 +137,30 @@ export const UserRepository: IUserRepositoryContract = {
             throw error
         }
     },
-    createOrder: async(userId, data) => {
+    createOrder: async (userId: number, data: any) => {
         try {
             const newOrder = await client.order.create({
                 data: {
-                    ...data,
-                    userId: userId
+                    firstName: data.firstName,
+                    patronymic: data.patronymic,
+                    phoneNumber: data.phoneNumber,
+                    email: data.email,
+                    comment: data.comment,
+                    cityName: data.cityName,
+                    paymentMethod: data.paymentMethod,
+                    userId: userId,
+                    products: {
+                        create: data.products.map((p: { productId: number }) => ({
+                            productId: p.productId
+                        }))
+                    }
                 }
-            })
-            return newOrder
-        }catch(error){
-            throw error
+            });
+            return newOrder;
+        } catch (error) {
+            throw error;
         }
-},
+    },
     deleteAdress: async(adressId) => {
         try{
             const deletedDelivery = await client.address.delete({

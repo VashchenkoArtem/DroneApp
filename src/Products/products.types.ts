@@ -56,5 +56,5 @@ export interface IProductRepositoryContract {
     createProduct: (data: CreateProduct) => Promise<ProductWithId | null>
     deleteProduct: (id: number) => Promise<ProductWithId | null>
     updateProduct: (id: number, data: UpdateProduct) => Promise<ProductWithId | null>
-    getFilteredProducts: (query: IFilteredProducts) => Promise<ProductWithId | null>
+    getFilteredProducts: (query: IFilteredProducts) => Promise<ProductWithId[] | null>
 }

@@ -81,5 +81,18 @@ export const ProductController: IProductControllerContract = {
         }
         
         res.status(200).json(updatedProduct);
-    }
+    },
+
+    getFilteredProducts: async (req, res) => {
+        try {
+            const products = await ProductService.getFilteredProducts(req.query);
+            if (products === null) {
+                res.status(400).json("Параметри 'popular' та 'new' не можуть бути використані одночасно.");
+                return;
+            }
+            res.status(200).json(products);
+        } catch (error) {
+            res.status(500).json("Внутрішня помилка сервера");
+        }
+    },
 }
