@@ -9,6 +9,21 @@
   - [Використані технології | Tehnologies used](#використані-технології--tehnologies-used)
   - [Архітектура проєкту | Project architecture](#архітектура-проєкту--project-architecture)
   - [Використані статус-коди | Used status-codes](#використані-статус-коди--used-status-codes)
+    - [Створення товару | Product creating](#створення-товару--product-creating)
+    - [Конкретний товар | Specific product](#конкретний-товар--specific-product)
+    - [Видалення товару | Product deleting](#видалення-товару--product-deleting)
+    - [Оновлення товару | Product updating](#оновлення-товару--product-updating)
+    - [Отримання рекомендованих товарів (Новинки / Популярні) | Get suggested products (New / Popular)](#отримання-рекомендованих-товарів-новинки--популярні--get-suggested-products-new--popular)
+    - [Реєстрація](#реєстрація)
+    - [Авторизація](#авторизація)
+    - [Особиста інформація | About me](#особиста-інформація--about-me)
+    - [Оновлення особистої інформації | Updating information about me](#оновлення-особистої-інформації--updating-information-about-me)
+    - [Створення адреси доставки | Сreating address of delivery](#створення-адреси-доставки--сreating-address-of-delivery)
+    - [Видалення адреси доставки | Deleting address of delivery](#видалення-адреси-доставки--deleting-address-of-delivery)
+    - [Оновлення адреси доставки | Updating address of delivery](#оновлення-адреси-доставки--updating-address-of-delivery)
+    - [Отримання адрес доставок користувача | Getting user deliveries addresses](#отримання-адрес-доставок-користувача--getting-user-deliveries-addresses)
+    - [Отримання адреси доставки по id | Getting delivery address by id](#отримання-адреси-доставки-по-id--getting-delivery-address-by-id)
+    - [Отримання замовлень користувача | Getting user orders](#отримання-замовлень-користувача--getting-user-orders)
 
 ## Мета створення проєкту | Purpose of the Project
 
@@ -419,6 +434,77 @@ PATCH /products/:id
 ]
 ```
 </details>
+
+<br>
+<hr>
+<br>
+
+### Отримання рекомендованих товарів (Новинки / Популярні) | Get suggested products (New / Popular)
+
+```
+GET /products/suggestions
+```
+
+
+  | **Query \| Параметр** | **Type \| Тип** | **Description \| Опис** |
+  | --- | --- | --- |
+  | *new* | boolean | Якщо true, повертає новинки | If true, returns new arrivals |
+  | *popular* | boolean | Якщо true, повертає популярні | If true, returns popular products |
+  | *limit* | number | Кількість товарів (дефолт: 10) | Amount of products (default: 10) |
+  | *offset* | number | Кількість пропущених товарів | Number of skipped products |
+
+  | **Status-code \| Статус-код** | **Description \| Опис** |
+  | --- | --- |
+  | 200 | Success \| Успіх |
+  | 204 | Without information \| Немає інформації |
+  | 400 | Incorrect request \| Некоректий запит (одночасно new та popular) |
+
+
+<details>
+  <summary>Відповідь | Response</summary>
+
+  ```json
+  [
+    {
+      "id": 3,
+      "name": "DJI Mavic 3 Pro",
+      "price": 80000,
+      "discount": 5,
+      "image": "mavic.jpg",
+      "description": "Professional drone with triple camera system",
+      "count": 10,
+      "categoryId": 1,
+      "blocks": [
+        {
+          "id": 5,
+          "title": "Camera",
+          "description": "Hasselblad camera for cinematic shooting",
+          "blockAlign": "left",
+          "image": "camera.png",
+          "blockOrder": 1,
+          "productId": 3
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "FPV Drone iFlight Nazgul",
+      "price": 18500,
+      "discount": 0,
+      "image": "nazgul.png",
+      "description": "High-speed drone for freestyle",
+      "count": 5,
+      "categoryId": 1,
+      "blocks": []
+    }
+  ]
+  ```
+</details>
+
+<br>
+<hr>
+<br>
+
 </details>
 
 <details>
