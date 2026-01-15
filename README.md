@@ -9,6 +9,17 @@
   - [Використані технології | Tehnologies used](#використані-технології--tehnologies-used)
   - [Архітектура проєкту | Project architecture](#архітектура-проєкту--project-architecture)
   - [Використані статус-коди | Used status-codes](#використані-статус-коди--used-status-codes)
+    - [Створення товару | Product creating](#створення-товару--product-creating)
+    - [Конкретний товар | Specific product](#конкретний-товар--specific-product)
+    - [Видалення товару | Product deleting](#видалення-товару--product-deleting)
+    - [Оновлення товару | Product updating](#оновлення-товару--product-updating)
+    - [Реєстрація](#реєстрація)
+    - [Авторизація](#авторизація)
+    - [Особиста інформація | About me](#особиста-інформація--about-me)
+    - [Оновлення особистої інформації | Updating information about me](#оновлення-особистої-інформації--updating-information-about-me)
+    - [Створення адреси доставки | Сreating address of delivery](#створення-адреси-доставки--сreating-address-of-delivery)
+    - [Видалення адреси доставки | Deleting address of delivery](#видалення-адреси-доставки--deleting-address-of-delivery)
+    - [Оновлення адреси доставки | Updating address of delivery](#оновлення-адреси-доставки--updating-address-of-delivery)
 
 ## Мета створення проєкту | Purpose of the Project
 
@@ -646,7 +657,7 @@ PATCH /products/:id
   ### Оновлення адреси доставки | Updating address of delivery
 
   ```
-  PATCH /user/adress/:adressId
+  PATCH /user/adress/:azdressId
   ```
 
   | **Status-code \| Статус-код** | **Description \| Опис** |

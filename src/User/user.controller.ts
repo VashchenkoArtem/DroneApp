@@ -97,7 +97,7 @@ export const userController: IUserControllerContract = {
         const delivery = await UserService.getUserDeliveryById(deliveryId)
         
         if (!delivery) {
-            res.status(400).json('There was an error while getting an adress')
+            res.status(404).json('User does not have orders yet')
         }
 
         res.status(200).json(delivery)
