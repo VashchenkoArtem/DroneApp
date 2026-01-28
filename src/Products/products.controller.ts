@@ -1,5 +1,5 @@
 import { ProductService } from "./products.service";
-import { IProductControllerContract } from "./products.types";
+import { IProductControllerContract, IFilteredProducts } from "./products.types";
 
 export const ProductController: IProductControllerContract = {
     getAllProducts: async(req, res): Promise<void> => {
@@ -85,13 +85,26 @@ export const ProductController: IProductControllerContract = {
 
     getFilteredProducts: async (req, res) => {
         try {
-            const products = await ProductService.getFilteredProducts(req.query);
+            const queryParams: IFilteredProducts = {
+                ...req.query,
+                sameAs: req.query.sameAs ? Number(req.query.sameAs) : undefined
+            };
+
+            const products = await ProductService.getFilteredProducts(queryParams);
+            
             if (products === null) {
                 res.status(400).json("Параметри 'popular' та 'new' не можуть бути використані одночасно.");
                 return;
             }
+
+            if (products.length === 0) {
+                res.status(204).send();
+                return;
+            }
+
             res.status(200).json(products);
         } catch (error) {
+            console.error(error);
             res.status(500).json("Внутрішня помилка сервера");
         }
     },

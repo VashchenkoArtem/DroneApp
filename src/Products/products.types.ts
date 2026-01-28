@@ -8,10 +8,11 @@ export type CreateProduct = Prisma.ProductUncheckedCreateInput
 export type UpdateProduct = Prisma.ProductUncheckedUpdateInput
 
 export interface IFilteredProducts {
-    popular?: boolean
-    new?: boolean
-    limit?: number
-    offset?: number
+    popular?: boolean | undefined
+    new?: boolean | undefined
+    sameAs?: number | undefined
+    limit?: number | undefined
+    offset?: number | undefined
 }
 
 export interface IProductControllerContract {
@@ -56,5 +57,6 @@ export interface IProductRepositoryContract {
     createProduct: (data: CreateProduct) => Promise<ProductWithId | null>
     deleteProduct: (id: number) => Promise<ProductWithId | null>
     updateProduct: (id: number, data: UpdateProduct) => Promise<ProductWithId | null>
+    getRelated: (limit: number, excludedIds: number[], filter: Prisma.ProductWhereInput) => Promise<ProductWithId[]>;
     getFilteredProducts: (query: IFilteredProducts) => Promise<ProductWithId[] | null>
 }
