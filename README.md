@@ -450,6 +450,7 @@ GET /products/suggestions
   | --- | --- | --- |
   | *new* | boolean | Якщо true, повертає новинки | If true, returns new arrivals |
   | *popular* | boolean | Якщо true, повертає популярні | If true, returns popular products |
+  | *sameAs* | number | ID товару для пошуку схожих | Product ID to find similar ones |
   | *limit* | number | Кількість товарів (дефолт: 10) | Amount of products (default: 10) |
   | *offset* | number | Кількість пропущених товарів | Number of skipped products |
 
@@ -459,6 +460,16 @@ GET /products/suggestions
   | 204 | Without information \| Немає інформації |
   | 400 | Incorrect request \| Некоректий запит (одночасно new та popular) |
 
+<details>
+  <summary>Логіка підбору схожих товарів | Related products logic (sameAs)</summary>
+
+  При використанні параметра sameAs, система наповнює список до досягнення limit за наступним пріоритетом:
+  1. **Схожа назва (Name Similarity):** Товари, назви яких містять слова з назви оригінального товару.
+  2. **Схожа категорія (Category Similarity):** Товари з тієї ж категорії.
+  3. **Схожа ціна (Price Similarity):** Товари в ціновому діапазоні ±20% від ціни оригіналу.
+
+  *Оригінальний товар завжди повертається першим у списку.*
+</details>
 
 <details>
   <summary>Відповідь | Response</summary>

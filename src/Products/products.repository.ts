@@ -68,6 +68,22 @@ export const ProductRepository: IProductRepositoryContract = {
         }
     },
 
+    getRelated: async (limit, excludedIds, filter) => {
+        try {
+            const products = await client.product.findMany({
+                where: {
+                    id: { notIn: excludedIds },
+                    ...filter,
+                },
+                take: limit,
+                include: { blocks: true }
+            });
+            return products as ProductWithId[];
+        } catch (error) {
+            throw error;
+        }
+    },
+
     getFilteredProducts: async (query: IFilteredProducts): Promise<ProductWithId[]> => {
         try {
             const { popular, new: isNew, limit = 10, offset = 0 } = query;
