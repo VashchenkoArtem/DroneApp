@@ -52,8 +52,7 @@ export const ProductService: IProductServiceContract = {
             const effectiveLimit = limit - 1;
 
             if (effectiveLimit > 0) {
-                //Поиск по названию 
-                const words = original.name.split(' ').filter(w => w.length > 2);
+                const words = original.name.split(' ').filter(word => word.length > 2);
                 const nameFilter: Prisma.ProductWhereInput = { 
                     OR: words.map(w => ({ name: { contains: w } })) 
                 };
@@ -62,7 +61,6 @@ export const ProductService: IProductServiceContract = {
                 results = [...results, ...byName];
                 excludedIds.push(...byName.map((p: ProductWithId) => p.id));
 
-                //Поиск по категории
                 if (results.length < limit) {
                     const byCat = await ProductRepository.getRelated(
                         limit - results.length, 
@@ -73,7 +71,6 @@ export const ProductService: IProductServiceContract = {
                     excludedIds.push(...byCat.map((p: ProductWithId) => p.id));
                 }
 
-                //Поиск по цене
                 if (results.length < limit) {
                     const range = original.price * 0.2;
                     const byPrice = await ProductRepository.getRelated(
@@ -92,7 +89,8 @@ export const ProductService: IProductServiceContract = {
             popular: isPopular,
             new: isNew,
             limit: query.limit,
-            offset: query.offset
+            offset: query.offset,
+            categoryId: query.categoryId
         });
     }
 }

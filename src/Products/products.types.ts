@@ -13,6 +13,7 @@ export interface IFilteredProducts {
     sameAs?: number | undefined
     limit?: number | undefined
     offset?: number | undefined
+    categoryId?: number | undefined
 }
 
 export interface IProductControllerContract {

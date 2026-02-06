@@ -5,10 +5,14 @@ import { Prisma } from "@prisma/client";
 export const ProductRepository: IProductRepositoryContract = {
     getAllProducts: async (categoryId) => {
         try {
-            const products = await client.product.findMany({
-                where: { categoryId: categoryId },
-                include: { blocks: true }
-            })
+            if (categoryId){
+                const products = await client.product.findMany({
+                    where: { categoryId: categoryId },
+                    include: { blocks: true }
+                })
+                return products as ProductWithId[];
+            }
+            const products = await client.product.findMany()
             return products as ProductWithId[];
         }
         catch (error) {
@@ -86,8 +90,8 @@ export const ProductRepository: IProductRepositoryContract = {
 
     getFilteredProducts: async (query: IFilteredProducts): Promise<ProductWithId[]> => {
         try {
-            const { popular, new: isNew, limit = 10, offset = 0 } = query;
-
+            const { categoryId, popular, new: isNew, limit = 10, offset = 0 } = query;
+            
             let orderBy: Prisma.ProductOrderByWithRelationInput = { id: 'desc' };
 
             if (popular) {
@@ -95,14 +99,22 @@ export const ProductRepository: IProductRepositoryContract = {
             } else if (isNew) {
                 orderBy = { id: 'desc' };
             }
-
+            if (!isNaN(Number(categoryId))){
+                const products = await client.product.findMany({
+                    where: {categoryId: Number(categoryId)},
+                    orderBy: orderBy,
+                    take: Number(limit),
+                    skip: Number(offset),
+                    include: { blocks: true }
+                });
+                return products as ProductWithId[];
+            }
             const products = await client.product.findMany({
                 orderBy: orderBy,
                 take: Number(limit),
                 skip: Number(offset),
                 include: { blocks: true }
             });
-
             return products as ProductWithId[];
         } catch (error) {
             console.error(error);

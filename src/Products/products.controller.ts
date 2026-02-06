@@ -4,9 +4,11 @@ import { IProductControllerContract, IFilteredProducts } from "./products.types"
 export const ProductController: IProductControllerContract = {
     getAllProducts: async(req, res): Promise<void> => {
         const categoryFilter = Number(req.query.categoryId);
-        if (Number.isNaN(categoryFilter)){
-            res.status(400).json(`Id does not found`)
-            return;
+        if (categoryFilter){
+            if (Number.isNaN(categoryFilter)){
+                res.status(400).json(`Id does not found`)
+                return;
+            }
         }
         const response = await ProductService.getAllProducts(categoryFilter);
         if (!response || response.length === 0){
