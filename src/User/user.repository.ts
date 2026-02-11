@@ -195,7 +195,9 @@ export const UserRepository: IUserRepositoryContract = {
                     password: newHashedPassword
                 }
             })
-        }catch(error){
+        } catch (error) {
+            console.error(error);
+            throw new Error("Database error during password reset");
         }
     }
 }

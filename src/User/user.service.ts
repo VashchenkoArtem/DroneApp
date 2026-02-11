@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { ENV } from "../config/env";
 import { UserRepository } from "./user.repository";
-import { IUserServiceContract } from "./user.types";
+import { IUserServiceContract, UserWithoutPassword } from "./user.types";
 import { sign } from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -39,19 +39,19 @@ export const UserService: IUserServiceContract = {
     },
 
     login: async (data) => {
-        const authUser = await UserRepository.findUserByEmail(data.email)
+        const authUser = await UserRepository.findUserByEmail(data.email);
+        if (!authUser) return "User not found. Please, register your account";
 
-        if (!authUser) {
-            return "User not found. Please, register your account"
-        }
+        const isMatch = await compare(data.password, authUser.password);
+        if (!isMatch) return "Wrong credentials. Please, try again";
 
-        const matchingTokenValue = await compare(data.password, authUser.password);
-        if (!matchingTokenValue){
-			return "Wrong credentials. Please, try again"
-		} 
-
-		const token = sign({ id: authUser.id }, ENV.SECRET_KEY, { expiresIn: "7d" })
-		return {token}
+        const token = sign({ id: authUser.id }, ENV.SECRET_KEY, { expiresIn: "7d" });
+        
+        const { password, ...userProfile } = authUser;
+        return { 
+            token, 
+            user: userProfile as UserWithoutPassword 
+        };
     },
 
     me: async (id) => {
