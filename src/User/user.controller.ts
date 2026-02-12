@@ -20,16 +20,11 @@ export const userController: IUserControllerContract = {
         res.status(200).json(response)
     },
     login: async (req, res) => {
-        const response = await UserService.login(req.body)
+        const response = await UserService.login(req.body);
 
         if (typeof response === 'string') {
-            if (response === "Wrong credentials. Please, try again") {
-                res.status(422).json(response)
-            } else if (response === "User not found. Please, register your account") {
-                res.status(404).json(response)
-            } else {
-                res.status(500).json(response)
-            }
+            const status = response.includes("not found") ? 404 : 422;
+            res.status(status).json(response);
             return;
         }
         res.status(200).json(response);
