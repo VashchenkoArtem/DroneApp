@@ -64,7 +64,7 @@ export interface IUserControllerContract {
         res: Response<AuthToken | string>
     ) => void,
     updateUser: (
-        req: Request<{id: number}, UserWithoutPassword | string, UpdateUser, object>,
+        req: Request<object, UserWithoutPassword | string, UpdateUser, object>,
         res: Response<UserWithoutPassword | string>
     ) => void,
 

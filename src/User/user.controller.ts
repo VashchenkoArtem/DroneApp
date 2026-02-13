@@ -6,11 +6,13 @@ export const userController: IUserControllerContract = {
         const response = await UserService.registration(req.body)
         if (response === "User already exist. Try to log in"){
             res.status(401).json(response)
+            return;
         }
         res.status(201).json(response)
     },
     updateUser: async (req, res) => {
-        const userId = Number(req.params.id)
+        const userId = res.locals.userId;
+        console.log(userId)
         const updatedData = req.body
         if (!updatedData){
             res.status(422).json("Please, enter a fields, which you want to update");
