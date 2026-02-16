@@ -15,7 +15,7 @@ router.get("/users/addresses", userController.getUserDeliveries)
 router.get('/users/addresses/:addressId', userController.getUserDeliveryById)
 router.get("/users/:userId/orders/", userController.getUserOrders)
 router.post("/users/orders", authMiddleware, userController.createOrder)
-router.post("/users/contact", authMiddleware, userController.sendContactMessage);
+router.post("/users/contacts", userController.sendContactMessage);
 router.post("/users/send-code", userController.sendCodeToEmail);
 router.post("/users/recovery-password", userController.checkAndResetPassword);
 

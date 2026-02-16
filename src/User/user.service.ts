@@ -61,12 +61,7 @@ export const UserService: IUserServiceContract = {
         }
         return foundedUser
     },
-    sendContactMessage: async (userId, data) => {
-        const user = await UserRepository.findUserByIdWithoutPassword(userId);
-        
-        if (!user) {
-            return "User not found. Please log in again.";
-        }
+    sendContactMessage: async (data) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -77,14 +72,14 @@ export const UserService: IUserServiceContract = {
         await transporter.sendMail({
             from: ENV.MAIL_USER,
             to: ENV.ADMIN_EMAIL,
-            replyTo: user.email,
-            subject: `Нове повідомлення від ${user.firstName} ${user.lastName}`,
+            replyTo: data.email,
+            subject: `Нове повідомлення від ${data.userName}`,
             html: `
                 <div style="font-family: sans-serif; line-height: 1.5;">
                     <h2>Звернення через контактну форму</h2>
-                    <p><b>Від кого:</b> ${user.firstName} ${user.lastName}</p>
-                    <p><b>Email користувача (з профілю):</b> <a href="mailto:${user.email}">${user.email}</a></p>
-                    <p><b>Телефон (з профілю):</b> ${user.phoneNumber}</p>
+                    <p><b>Від кого:</b> ${data.userName}</p>
+                    <p><b>Email користувача (з профілю):</b> <a href="mailto:${data.email}">${data.email}</a></p>
+                    <p><b>Телефон (з профілю):</b> ${data.phoneNumber}</p>
                     <hr />
                     <p><b>Повідомлення:</b></p>
                     <p style="background: #f4f4f4; padding: 15px; border-radius: 5px;">${data.message}</p>

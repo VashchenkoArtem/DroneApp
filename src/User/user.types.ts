@@ -43,6 +43,9 @@ export interface ErrorResponse {
 // export type UpdateAddress = Prisma.AddressUpdateInput;
 
 export interface IContactFormBody {
+    userName: string;
+    phoneNumber: string;
+    email: string;
     message: string;
 }
 export type Address = Prisma.AddressGetPayload<{}>
@@ -134,7 +137,7 @@ export interface IUserServiceContract {
     updateUser: (data: UpdateUser, id: number) => Promise<UserWithoutPassword | string>
     login: (data: UserLogin) => Promise<AuthToken | string>
     me: (id: number) => Promise<UserWithoutPassword | string>
-    sendContactMessage: (userId: number, data: IContactFormBody) => Promise<{ success: boolean } | string>;
+    sendContactMessage: (data: IContactFormBody) => Promise<{ success: boolean } | string>;
     createAdress: (data: CreateAddress, userId: number) => Promise<Address | string> 
     deleteAdress: (id: number) => Promise<Address | string>
     updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>

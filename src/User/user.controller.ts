@@ -48,13 +48,9 @@ export const userController: IUserControllerContract = {
         
     },
     sendContactMessage: async (req, res) => {
-        const userId = res.locals.userId;
         const body = req.body;
 
-        if (!userId) {
-            res.status(401).json("Unauthorized");
-        }
-        const response = await UserService.sendContactMessage(userId, body);
+        const response = await UserService.sendContactMessage(body);
 
         if (typeof response === "string") {
             res.status(500).json(response);
