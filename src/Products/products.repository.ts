@@ -1,4 +1,4 @@
-import { IProductRepositoryContract, IFilteredProducts, ProductWithId } from "./products.types";
+import { IProductRepositoryContract, IFilteredProducts, ProductWithId, CreateProduct } from "./products.types";
 import { client } from '../client/client'
 import { Prisma } from "@prisma/client";
 
@@ -12,7 +12,9 @@ export const ProductRepository: IProductRepositoryContract = {
                 })
                 return products as ProductWithId[];
             }
-            const products = await client.product.findMany()
+            const products = await client.product.findMany({
+                include: { blocks: true }
+            })
             return products as ProductWithId[];
         }
         catch (error) {
@@ -33,18 +35,28 @@ export const ProductRepository: IProductRepositoryContract = {
         }
     },
 
-    createProduct: async (data: any) => {
-        return await client.product.create({
-            data: {
-                name: data.name,
-                price: Number(data.price),
-                discount: Number(data.discount),
-                image: data.image,
-                description: data.description,
-                count: Number(data.count),
-                categoryId: Number(data.categoryId)
-            }
-        });
+    createProduct: async (data: CreateProduct) => {
+        try {
+            const newProduct = await client.product.create({
+                data: {
+                    name: data.name,
+                    price: Number(data.price),
+                    discount: Number(data.discount),
+                    image: data.image,
+                    description: data.description,
+                    count: Number(data.count),
+                    categoryId: Number(data.categoryId)
+                },
+                include: {
+                    blocks: true
+                }
+            });
+            
+            return newProduct as ProductWithId;
+        } catch (error) {
+            console.error("Error creating product:", error);
+            throw error;
+        }
     },
 
     deleteProduct: async (id) => {

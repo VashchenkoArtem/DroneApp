@@ -60,66 +60,78 @@ export const userController: IUserControllerContract = {
         res.status(200).json(response);
     },
     deleteAdress: async (req, res) => {
-        const adressId = Number(req.params.addressId);
-        console.log(req.params.addressId)
-        const deletedAdress = await UserService.deleteAdress(adressId)
+        const addressId = Number(req.params.addressId);
+        const deletedAdress = await UserService.deleteAdress(addressId);
 
         if (!deletedAdress) {
-            res.status(400).json('There was an error while deleting an adress')
+            return res.status(400).json('There was an error while deleting an adress');
         }
-        res.status(200).json(deletedAdress)
+        return res.status(200).json(deletedAdress);
     },
 
-    updateAdress: async(req, res) => {
-        const body = req.body;
-        const adressId = Number(req.params.adressId)
+    updateAdress: async (req, res) => {
+        try {
+            const { addressId } = req.params; 
+            const data = req.body;
 
-        const updateAdress = await UserService.updateAdress(adressId, body)
-        res.status(200).json(updateAdress)
+            if (!addressId) {
+                return res.status(400).json("Address ID is required");
+            }
+
+            const response = await UserService.updateAdress(Number(addressId), data);
+            
+            if (!response) {
+                return res.status(400).json('Error while updating address');
+            }
+
+            return res.status(200).json(response);
+        } catch (error) {
+            console.error("Controller Error:", error);
+            return res.status(500).json("Internal Server Error");
+        }
     },
 
     getUserDeliveries: async(req, res) => {
-        const userId = Number(req.params.userId)    
+        const userId = Number(req.params.userId);    
         if (Number.isNaN(userId)) {
-            res.status(401).json("Please, enter id correctly")
-            return;
+            return res.status(401).json("Please, enter id correctly");
         }
         const userDeliveries = await UserService.getUserDeliveries(userId);
 
         if (!userDeliveries) {
-            res.status(404).json('User does not have any deliveries. Create one.');
+            return res.status(404).json('User does not have any deliveries. Create one.');
         }
 
-        res.status(200).json(userDeliveries);
+        return res.status(200).json(userDeliveries);
     },
 
     getUserDeliveryById: async(req, res) => {
-        const deliveryId = Number(req.params.adressId)
+        const deliveryId = Number(req.params.addressId);
+        const delivery = await UserService.getUserDeliveryById(deliveryId);
         
-        const delivery = await UserService.getUserDeliveryById(deliveryId)
-        
-        if (!delivery) {
-            res.status(400).json('There was an error while getting an adress')
+        if (!delivery || typeof delivery === 'string') {
+            return res.status(400).json('There was an error while getting an adress');
         }
 
-        res.status(200).json(delivery)
+        return res.status(200).json(delivery);
     },
 
-    getUserOrders: async(req, res) => {
-        const userId = Number(req.params.userId)    
+    getUserOrders: async (req, res) => {
+        const email = req.params.email;
 
-        if (Number.isNaN(userId)) {
-            res.status(401).json("Please, enter id correctly")
-            return
+        if (!email) {
+            res.status(400).json("Email is required");
+            return;
         }
 
-        const userOrders = await UserService.getUserOrders(userId)
+        const orders = await UserService.getUserOrders(email);
 
-        if (!userOrders) {
-            res.status(404).json('User does not have any orders. Order something.')
+        if (!orders || (Array.isArray(orders) && orders.length === 0)) {
+            res.status(404).json("No orders found for this email");
+            return;
         }
 
-        res.status(200).json(userOrders)
+        res.status(200).json(orders);
     },
     createOrder: async (req, res) => {
         const userId = res.locals.userId;
@@ -130,8 +142,8 @@ export const userController: IUserControllerContract = {
     createAdress: async (req, res) => {
         const userId = res.locals.userId;
         const body = req.body;
-        const response = await UserService.createAdress(body, userId)
-        res.status(201).json(response)
+        const response = await UserService.createAdress(body, userId);
+        return res.status(201).json(response);
     },
     sendCodeToEmail: async (req, res) => {
         const body = req.body

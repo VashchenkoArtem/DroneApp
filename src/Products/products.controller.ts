@@ -1,5 +1,5 @@
 import { ProductService } from "./products.service";
-import { IProductControllerContract, IFilteredProducts } from "./products.types";
+import { IProductControllerContract, IFilteredProducts, CreateProduct } from "./products.types";
 
 export const ProductController: IProductControllerContract = {
     getAllProducts: async(req, res): Promise<void> => {
@@ -33,12 +33,14 @@ export const ProductController: IProductControllerContract = {
     },
 
     createProduct: async(req, res) => {
-        const data = req.body
-        const createdProduct = await ProductService.createProduct(data)
+        const data: CreateProduct = req.body;
+        
         if (!data){
             res.status(422).json('There is lack of data. Enter more information.')
             return;
         }
+
+        const createdProduct = await ProductService.createProduct(data);
 
         if (!createdProduct){
             res.status(500).json('There went something wrong on server side')
