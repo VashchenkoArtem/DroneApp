@@ -185,19 +185,52 @@ export const UserRepository: IUserRepositoryContract = {
             throw error
         }
     },
-    checkAndResetPassword: async (email, newHashedPassword) => {
+    checkAndResetPassword: async (newHashedPassword, code) => {
         try{
-            const newPassword = await client.user.update({
+            console.log(code)
+            const reset = await client.passwordReset.findUnique({
+            where: {
+                codeHash: code
+            }
+            })
+            if (!reset || reset.isUsed) {
+                throw new Error("Invalid or expired code")
+            }
+            await client.user.update({
                 where: {
-                    email: email
+                    id: reset.userId
                 },
                 data: {
                     password: newHashedPassword
                 }
+                })
+            await client.passwordReset.delete({
+                where: {
+                    id: reset.id
+                }
             })
         } catch (error) {
             console.error(error);
-            throw new Error("Database error during password reset");
+        }
+    },
+    sendCodeToEmail: async(data, code) => {
+        try{
+            const user = await client.user.findUnique({
+                where: {
+                    email: data.email
+                }
+            })
+            if (!user){
+                throw new Error("User not found!")
+            }
+            await client.passwordReset.create({
+                data: {
+                    userId: user.id,
+                    codeHash: code
+                }
+            })
+        }catch(error){
+            console.log(error)
         }
     }
 }

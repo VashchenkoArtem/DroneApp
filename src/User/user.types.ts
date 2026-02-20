@@ -56,9 +56,7 @@ export type Order = Prisma.OrderGetPayload<{}>
 export type CreateOrder = Prisma.OrderUncheckedCreateInput
 
 export type passwordForm = {
-    password: string,
-    code: string,
-    email: string
+    password: string
 }
 export interface IUserControllerContract {
     registration: (
@@ -146,7 +144,7 @@ export interface IUserServiceContract {
     getUserOrders: (userId: number) => Promise<Order[] | string>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
     sendCodeToEmail: (data: {email: string}) => Promise<string>
-    checkAndResetPassword: (data: passwordForm, codeFromEmail: string) => Promise<string>
+    checkAndResetPassword: (data: passwordForm,codeFromEmail: string) => Promise<string>
 
 }
 
@@ -162,5 +160,6 @@ export interface IUserRepositoryContract {
     getUserDeliveryById: (adressId: number) => Promise<Address | null>
     getUserOrders: (userId: number) => Promise<Order[]>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order>
-    checkAndResetPassword: (email: string, newHashedPassword: string) => Promise<void>
+    checkAndResetPassword: (newHashedPassword: string, code: number) => Promise<void>
+    sendCodeToEmail: (data: {email: string}, code: number) => Promise<void>
 }

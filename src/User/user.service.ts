@@ -5,6 +5,7 @@ import { IUserServiceContract, UserWithoutPassword } from "./user.types";
 import { sign } from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { userController } from './user.controller';
 
 export const UserService: IUserServiceContract = {
     registration: async (data) => {
@@ -141,6 +142,7 @@ export const UserService: IUserServiceContract = {
             }
         });
         const code = Math.floor(100000 + Math.random() * 900000).toString();
+        await UserRepository.sendCodeToEmail(data, Number(code))
         await transporter.sendMail({
             from: ENV.MAIL_USER,
             to: data.email,
@@ -148,18 +150,15 @@ export const UserService: IUserServiceContract = {
             subject: `Reset password code`,
             html: `
             <h1>Your password reset code:</h1>
-            <a style="color: blue;">http://127.0.0.1:8000/users/recovery-password?code=${code}</a>
+            <a style="color: blue;">http://127.0.0.1:8000?code=${code}</a>
             `
         });
+
         return "Code sent to email successfully. Please, check your inbox.";
     },
     checkAndResetPassword: async (data, codeFromEmail) => {
-        console.log(data.code, codeFromEmail);
-        if (data.code != codeFromEmail) {
-            return "Invalid code. Please try again.";
-        }
         const hashedPassword = await hash(data.password, 10);
-        await UserRepository.checkAndResetPassword(data.email, hashedPassword);
+        await UserRepository.checkAndResetPassword(hashedPassword, Number(codeFromEmail));
         return "Password has been successfully updated.";
     }
 }

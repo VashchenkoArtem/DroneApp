@@ -15,18 +15,30 @@ datasource db {
 
 
 model User {
-  id           Int       @id @default(autoincrement())
-  firstName    String
-  patronymic   String
-  lastName     String
-  email        String    @unique
-  password     String
-  birthDate    DateTime
-  phoneNumber  String
-  deliveries   Address[]
-  orders Order[]
+  id            Int            @id @default(autoincrement())
+  firstName     String
+  patronymic    String
+  lastName      String
+  email         String         @unique
+  password      String
+  birthDate     DateTime
+  phoneNumber   String
+
+  deliveries    Address[]
+  orders        Order[]
+
+  passwordReset PasswordReset?
 }
 
+model PasswordReset {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  codeHash   Int      @unique
+  isUsed     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
 model Address {
   id            Int    @id @default(autoincrement())
   city          String

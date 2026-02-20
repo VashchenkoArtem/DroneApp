@@ -140,6 +140,7 @@ export const userController: IUserControllerContract = {
     },
     checkAndResetPassword: async (req, res) => {
         const codeFromEmail = req.query.code;
+        console.log(codeFromEmail, "code")
         const body = req.body
         const response = await UserService.checkAndResetPassword(body, codeFromEmail)
         res.status(200).json(response)
