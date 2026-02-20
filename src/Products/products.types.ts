@@ -1,7 +1,9 @@
 import type { Request, Response } from "express";
 import { Prisma } from "@prisma/client"
 
-export type ProductWithId = Prisma.ProductGetPayload<{}>
+export type ProductWithId = Prisma.ProductGetPayload<{
+    include: { blocks: true }
+}>
 
 export type CreateProduct = Prisma.ProductUncheckedCreateInput
 

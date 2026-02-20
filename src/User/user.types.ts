@@ -96,7 +96,7 @@ export interface IUserControllerContract {
         res: Response<Address | string>
     ) => void,
     updateAdress: (
-        req: Request<{adressId: number}, Address | string, UpdateAddress>,
+        req: Request<{addressId: number}, Address | string, UpdateAddress>,
         res: Response<Address | string>
     ) => void, 
     getUserDeliveries: (
@@ -105,12 +105,12 @@ export interface IUserControllerContract {
     ) => void,
 
     getUserDeliveryById: (
-        req: Request<{adressId: number}, Address | string, object>,
+        req: Request<{addressId: number}, Address | string, object>,
         res: Response<Address | string>
     ) => void,
 
     getUserOrders: (
-        req: Request<{userId: number}, Order[] | string, object>,
+        req: Request<{email: string}, Order[] | string, object>,
         res: Response<Order[] | string>
     ) => void,
     createOrder: (
@@ -141,7 +141,7 @@ export interface IUserServiceContract {
     updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>
     getUserDeliveries: (userId: number) => Promise<Address[] | string>
     getUserDeliveryById: (id: number) => Promise<Address | string>
-    getUserOrders: (userId: number) => Promise<Order[] | string>
+    getUserOrders: (email: string) => Promise<Order[] | string>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
     sendCodeToEmail: (data: {email: string}) => Promise<string>
     checkAndResetPassword: (data: passwordForm,codeFromEmail: string) => Promise<string>
@@ -154,11 +154,11 @@ export interface IUserRepositoryContract {
     updateUser: (id: number, data: UpdateUser) => Promise<UserWithoutPassword>
     findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
     createAdress: (data: CreateAddress, userId: number) => Promise<Address | null>
-    deleteAdress: (adressId: number) => Promise<Address>
-    updateAdress: (adressId: number, data: UpdateAddress) => Promise<Address>
+    deleteAdress: (addressId: number) => Promise<Address>
+    updateAdress: (addressId: number, data: UpdateAddress) => Promise<Address>
     getUserDeliveries: (userId: number) => Promise<Address[]>
-    getUserDeliveryById: (adressId: number) => Promise<Address | null>
-    getUserOrders: (userId: number) => Promise<Order[]>
+    getUserDeliveryById: (addressId: number) => Promise<Address | null>
+    getUserOrders: (email: string) => Promise<Order[]>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order>
     checkAndResetPassword: (newHashedPassword: string, code: number) => Promise<void>
     sendCodeToEmail: (data: {email: string}, code: number) => Promise<void>

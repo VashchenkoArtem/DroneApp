@@ -90,49 +90,44 @@ export const UserService: IUserServiceContract = {
 
         return { success: true };
     },
-    deleteAdress: async (data) => {
-        const adress = await UserRepository.deleteAdress(data)
+    deleteAdress: async (id: number) => {
+        const adress = await UserRepository.deleteAdress(id);
         if (!adress) {
-            return 'Adress was not found. Try another adress.'
+            return 'Adress was not found. Try another adress.';
         }
-        return adress
+        return adress;
     },
 
-    updateAdress: async(adressId, data) => {
-        const updatedAdress = await UserRepository.updateAdress(adressId, data)
-        return updatedAdress
+    updateAdress: async (addressId: number, data) => {
+        return await UserRepository.updateAdress(addressId, data);
     },
 
     getUserDeliveries: async(userId) => {
-        const userDeliveries = await UserRepository.getUserDeliveries(userId)
-        return userDeliveries
+        const userDeliveries = await UserRepository.getUserDeliveries(userId);
+        return userDeliveries;
     },
 
     getUserDeliveryById: async(id) => {
-        const delivery = await UserRepository.getUserDeliveryById(id)
-
-        if (!delivery){
-            return "Delivery with this id cannot be found"
+        const delivery = await UserRepository.getUserDeliveryById(id);
+        if (!delivery) {
+            return 'Delivery was not found. Try another delivery.';
         }
-
-        return delivery
+        return delivery;
     },
 
-    getUserOrders: async(userId) => {
-        const userOrders = await UserRepository.getUserOrders(userId)
-        return userOrders
+    getUserOrders: async(email) => {
+        const orders = await UserRepository.getUserOrders(email)
+        return orders
     },
     createOrder: async(userId, data) => {
         const newOrder = await UserRepository.createOrder(userId, data)
         return newOrder
     },
     createAdress: async(data, userId) => {
-        const adress = await UserRepository.createAdress(data, userId)
-        if (!adress) {
-            return 'Adress was not found. Try another adress.'
-        }
-        return adress
+        const adress = await UserRepository.createAdress(data, userId);
+        return adress || 'Adress could not be created';
     },
+    
     sendCodeToEmail: async (data) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
