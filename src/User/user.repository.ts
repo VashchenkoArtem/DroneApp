@@ -193,6 +193,7 @@ export const UserRepository: IUserRepositoryContract = {
                 codeHash: code
             }
             })
+            console.log(reset, reset?.isUsed)
             if (!reset || reset.isUsed) {
                 throw new Error("Invalid or expired code")
             }
@@ -204,11 +205,6 @@ export const UserRepository: IUserRepositoryContract = {
                     password: newHashedPassword
                 }
                 })
-            await client.passwordReset.delete({
-                where: {
-                    id: reset.id
-                }
-            })
         } catch (error) {
             console.error(error);
         }

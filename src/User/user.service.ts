@@ -150,7 +150,7 @@ export const UserService: IUserServiceContract = {
             subject: `Reset password code`,
             html: `
             <h1>Your password reset code:</h1>
-            <a style="color: blue;">http://127.0.0.1:8000?code=${code}</a>
+            <a style="color: blue;">http://localhost:3000/?code=${code}</a>
             `
         });
 
