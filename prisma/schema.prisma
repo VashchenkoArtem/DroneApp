@@ -49,6 +49,7 @@ model Address {
   status        String @default("Processing...")
   userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order    Order?
 }
 
 
@@ -86,9 +87,9 @@ model Category{
 model ProductOnOrder{
   id Int @id @unique @default(autoincrement())
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int @unique
+  productId Int 
   order Order @relation(fields: [blockId], references: [id])
-  blockId Int @unique
+  blockId Int 
 }
 model Order{
   id Int @id @unique @default(autoincrement())
@@ -102,8 +103,10 @@ model Order{
   products ProductOnOrder[]
   userId Int
   user User @relation(fields: [userId], references: [id])
+  addressId Int @unique
+  address Address @relation(fields: [addressId], references: [id])
+  ttnNumber String
 }
-
 model ProductSpecifications {
   id Int @id @unique @default(autoincrement())
   title String

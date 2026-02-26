@@ -110,7 +110,7 @@ export interface IUserControllerContract {
     ) => void,
 
     getUserOrders: (
-        req: Request<{email: string}, Order[] | string, object>,
+        req: Request<object, Order[] | string, object>,
         res: Response<Order[] | string>
     ) => void,
     createOrder: (
@@ -141,7 +141,7 @@ export interface IUserServiceContract {
     updateAdress: (id: number, data: UpdateAddress) => Promise<Address | string>
     getUserDeliveries: (userId: number) => Promise<Address[] | string>
     getUserDeliveryById: (id: number) => Promise<Address | string>
-    getUserOrders: (email: string) => Promise<Order[] | string>
+    getUserOrders: (userId: number) => Promise<Order[] | string>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
     sendCodeToEmail: (data: {email: string}) => Promise<string>
     checkAndResetPassword: (data: passwordForm,codeFromEmail: string) => Promise<string>
@@ -158,7 +158,7 @@ export interface IUserRepositoryContract {
     updateAdress: (addressId: number, data: UpdateAddress) => Promise<Address>
     getUserDeliveries: (userId: number) => Promise<Address[]>
     getUserDeliveryById: (addressId: number) => Promise<Address | null>
-    getUserOrders: (email: string) => Promise<Order[]>
+    getUserOrders: (userId: number) => Promise<Order[]>
     createOrder: (userId: number, data: CreateOrder) => Promise<Order>
     checkAndResetPassword: (newHashedPassword: string, code: number) => Promise<void>
     sendCodeToEmail: (data: {email: string}, code: number) => Promise<void>

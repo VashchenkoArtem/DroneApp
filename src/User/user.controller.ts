@@ -117,14 +117,9 @@ export const userController: IUserControllerContract = {
     },
 
     getUserOrders: async (req, res) => {
-        const email = req.params.email;
+        const userId = res.locals.userId;
 
-        if (!email) {
-            res.status(400).json("Email is required");
-            return;
-        }
-
-        const orders = await UserService.getUserOrders(email);
+        const orders = await UserService.getUserOrders(userId);
 
         if (!orders || (Array.isArray(orders) && orders.length === 0)) {
             res.status(404).json("No orders found for this email");

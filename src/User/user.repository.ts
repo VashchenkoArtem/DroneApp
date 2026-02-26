@@ -108,18 +108,19 @@ export const UserRepository: IUserRepositoryContract = {
         });
     },
 
-    getUserOrders: async (email: string) => {
+    getUserOrders: async (userId) => {
         try {
             const userOrders = await client.order.findMany({
                 where: {
-                    email: email
+                    userId: userId
                 },
                 include: {
                     products: {
                         include: {
                             product: true
                         }
-                    }
+                    },
+                    address: true
                 },
                 orderBy: {
                     id: 'desc'
@@ -146,7 +147,9 @@ export const UserRepository: IUserRepositoryContract = {
                         create: data.products.map((p: { productId: number }) => ({
                             productId: p.productId
                         }))
-                    }
+                    },
+                    addressId: data.addressId,
+                    ttnNumber: data.ttnNumber
                 }
             });
             return newOrder;

@@ -13,7 +13,7 @@ router.delete("/users/addresses/:addressId", userController.deleteAdress);
 router.patch("/users/addresses/:addressId", userController.updateAdress);
 router.get("/users/addresses/:userId", userController.getUserDeliveries);
 router.get('/users/addresses/single/:addressId', userController.getUserDeliveryById);
-router.get("/users/orders/:email", authMiddleware, userController.getUserOrders);
+router.get("/users/orders", authMiddleware, userController.getUserOrders);
 router.post("/users/orders", authMiddleware, userController.createOrder)
 router.post("/users/contacts", userController.sendContactMessage);
 router.post("/users/send-code", userController.sendCodeToEmail);

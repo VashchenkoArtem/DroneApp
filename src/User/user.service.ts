@@ -115,8 +115,8 @@ export const UserService: IUserServiceContract = {
         return delivery;
     },
 
-    getUserOrders: async(email) => {
-        const orders = await UserRepository.getUserOrders(email)
+    getUserOrders: async(userId) => {
+        const orders = await UserRepository.getUserOrders(userId)
         return orders
     },
     createOrder: async(userId, data) => {
