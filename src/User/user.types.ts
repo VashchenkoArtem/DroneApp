@@ -58,6 +58,25 @@ export type CreateOrder = Prisma.OrderUncheckedCreateInput
 export type passwordForm = {
     password: string
 }
+
+
+
+export interface ICreateOrderInput {
+  firstName: string;
+  patronymic: string;
+  phoneNumber: string;
+  email: string;
+  comment?: string;
+  cityName: string;
+  paymentMethod: string;
+  warehouseName?: string;
+  street?: string;
+  products: { productId: number }[];
+  addressId?: number; 
+  ttnNumber?: string;
+}
+
+
 export interface IUserControllerContract {
     registration: (
         // {message: string}
@@ -114,9 +133,9 @@ export interface IUserControllerContract {
         res: Response<Order[] | string>
     ) => void,
     createOrder: (
-        req: Request<object, Order | string, CreateOrder, object>,
+        req: Request<object, Order | string, ICreateOrderInput>,
         res: Response<Order | string>
-    ) => void,
+    ) => Promise<void>;
     sendCodeToEmail: (
         req: Request<object, string, {email: string}, object>,
         res: Response<string>
@@ -124,7 +143,7 @@ export interface IUserControllerContract {
     checkAndResetPassword: (
         req: Request<object, string, passwordForm, {code: string}>,
         res: Response<string>
-    ) => void
+    ) => void,
 }
   
 
@@ -142,10 +161,9 @@ export interface IUserServiceContract {
     getUserDeliveries: (userId: number) => Promise<Address[] | string>
     getUserDeliveryById: (id: number) => Promise<Address | string>
     getUserOrders: (userId: number) => Promise<Order[] | string>
-    createOrder: (userId: number, data: CreateOrder) => Promise<Order | string>
+    createOrder: (userId: number, data: ICreateOrderInput) => Promise<Order | string>;
     sendCodeToEmail: (data: {email: string}) => Promise<string>
     checkAndResetPassword: (data: passwordForm,codeFromEmail: string) => Promise<string>
-
 }
 
 export interface IUserRepositoryContract {
@@ -155,11 +173,11 @@ export interface IUserRepositoryContract {
     findUserByIdWithoutPassword: (id: number) => Promise<UserWithoutPassword | null>
     createAdress: (data: CreateAddress, userId: number) => Promise<Address | null>
     deleteAdress: (addressId: number) => Promise<Address>
-    updateAdress: (addressId: number, data: UpdateAddress) => Promise<Address>
     getUserDeliveries: (userId: number) => Promise<Address[]>
     getUserDeliveryById: (addressId: number) => Promise<Address | null>
     getUserOrders: (userId: number) => Promise<Order[]>
-    createOrder: (userId: number, data: CreateOrder) => Promise<Order>
+    createOrder: (userId: number, data: CreateOrder) => Promise<Order>;
     checkAndResetPassword: (newHashedPassword: string, code: number) => Promise<void>
     sendCodeToEmail: (data: {email: string}, code: number) => Promise<void>
+    updateAdress: (addressId: number, data: UpdateAddress) => Promise<Address>;
 }

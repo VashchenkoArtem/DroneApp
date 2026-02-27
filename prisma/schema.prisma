@@ -1,8 +1,14 @@
 // This is your Prisma schema file,
+
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+
+
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
 
 generator client {
   provider = "prisma-client-js"
@@ -12,6 +18,7 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
 
 
 model User {
@@ -30,15 +37,17 @@ model User {
   passwordReset PasswordReset?
 }
 
+
+
 model PasswordReset {
   id         Int      @id @default(autoincrement())
   userId     Int      @unique
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   codeHash   Int      @unique
   isUsed     Boolean  @default(false)
   createdAt  DateTime @default(now())
 }
+
 model Address {
   id            Int    @id @default(autoincrement())
   city          String
@@ -51,6 +60,9 @@ model Address {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   order    Order?
 }
+
+
+
 
 
 model Product {
@@ -66,8 +78,8 @@ model Product {
   specifications ProductSpecifications?
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
-
 }
+
 model ProductBlock {
   id Int @id @unique @default(autoincrement())
   title String
@@ -78,12 +90,14 @@ model ProductBlock {
   product Product @relation(fields: [productId], references: [id])
   productId Int
 }
+
 model Category{
   id Int @id @unique @default(autoincrement())
   title String @unique
   image String
   products Product[]
 }
+
 model ProductOnOrder{
   id Int @id @unique @default(autoincrement())
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -91,22 +105,27 @@ model ProductOnOrder{
   order Order @relation(fields: [blockId], references: [id])
   blockId Int 
 }
+
 model Order{
   id Int @id @unique @default(autoincrement())
   firstName String
   patronymic String
   phoneNumber String
   email String
-  comment String
+  comment String?
   cityName String
   paymentMethod String
   products ProductOnOrder[]
   userId Int
   user User @relation(fields: [userId], references: [id])
-  addressId Int @unique
-  address Address @relation(fields: [addressId], references: [id])
+  addressId Int? @unique
+  address Address? @relation(fields: [addressId], references: [id])
   ttnNumber String
+  deliveryType       String?
+  warehouseRef       String?
+  warehouseDescription String?
 }
+
 model ProductSpecifications {
   id Int @id @unique @default(autoincrement())
   title String

@@ -1,11 +1,12 @@
 import nodemailer from 'nodemailer';
 import { ENV } from "../config/env";
 import { UserRepository } from "./user.repository";
-import { IUserServiceContract, UserWithoutPassword } from "./user.types";
+import { ICreateOrderInput, IUserServiceContract, Order, UserWithoutPassword } from "./user.types";
 import { sign } from 'jsonwebtoken'
 import { compare, hash } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { userController } from './user.controller';
+import { client } from '../client/client';
 
 export const UserService: IUserServiceContract = {
     registration: async (data) => {
@@ -119,9 +120,57 @@ export const UserService: IUserServiceContract = {
         const orders = await UserRepository.getUserOrders(userId)
         return orders
     },
-    createOrder: async(userId, data) => {
-        const newOrder = await UserRepository.createOrder(userId, data)
-        return newOrder
+    createOrder: async (userId: number, data: ICreateOrderInput): Promise<Order | string> => {
+
+        if (!data.products || !Array.isArray(data.products)) {
+            console.error("Помилка: відсутній масив products");
+            return "Список товарів є обов'язковим";
+        }
+
+        try {
+            return await client.$transaction(async (tx) => {
+                const newAddress = await tx.address.create({
+                    data: {
+                        city: data.cityName,
+                        street: data.street || "Не вказано",
+                        numberOfHouse: 0, 
+                        numberOfFlat: 0,
+                        entrance: 0,
+                        userId: userId
+                    }
+                });
+                const order = await tx.order.create({
+                    data: {
+                        firstName: data.firstName,
+                        patronymic: data.patronymic,
+                        phoneNumber: data.phoneNumber,
+                        email: data.email,
+                        comment: data.comment || "",
+                        cityName: data.cityName,
+                        paymentMethod: data.paymentMethod,
+                        userId: userId,
+                        addressId: newAddress.id,
+                        ttnNumber: null,
+                        deliveryType: "NovaPoshta",
+                        warehouseRef: data.warehouseName || "",
+                        warehouseDescription: data.warehouseName || ""
+                    }
+                });
+                for (const item of data.products) {
+                    await tx.productOnOrder.create({
+                        data: {
+                            productId: item.productId,
+                            blockId: order.id
+                        }
+                    });
+                }
+
+                return order;
+            });
+        } catch (e) {
+            console.error("Order creation failed:", e);
+            return "Failed to create order and address";
+        }
     },
     createAdress: async(data, userId) => {
         const adress = await UserRepository.createAdress(data, userId);
@@ -156,4 +205,4 @@ export const UserService: IUserServiceContract = {
         await UserRepository.checkAndResetPassword(hashedPassword, Number(codeFromEmail));
         return "Password has been successfully updated.";
     }
-}
+};
