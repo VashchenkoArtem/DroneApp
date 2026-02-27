@@ -72,8 +72,9 @@ export interface ICreateOrderInput {
   warehouseName?: string;
   street?: string;
   products: { productId: number }[];
-  addressId?: number; 
+  addressId?: number;
   ttnNumber?: string;
+  deliveryType: string
 }
 
 

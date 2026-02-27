@@ -2,7 +2,7 @@ import express from "express"
 import type { Express } from "express"
 import { Request, Response } from 'express';
 import productsRouter from './Products/products.router'
-import categoriesRouter from './Categories/categories.router'
+import categoriesRouter from './categories/categories.router'
 import userRouter from "./User/user.router"
 import cors  from "cors"
 import fs from 'fs';

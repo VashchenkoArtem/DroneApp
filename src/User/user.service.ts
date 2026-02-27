@@ -150,7 +150,7 @@ export const UserService: IUserServiceContract = {
                         paymentMethod: data.paymentMethod,
                         userId: userId,
                         addressId: newAddress.id,
-                        ttnNumber: null,
+                        ttnNumber: "SHPL3469727607",
                         deliveryType: "NovaPoshta",
                         warehouseRef: data.warehouseName || "",
                         warehouseDescription: data.warehouseName || ""
