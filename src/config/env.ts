@@ -6,4 +6,5 @@ export const ENV = cleanEnv(process.env, {
     MAIL_USER: str(),
     MAIL_PASS: str(),
     ADMIN_EMAIL: str(),
+    NP_API_KEY: str()
 })

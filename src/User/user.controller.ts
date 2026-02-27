@@ -1,5 +1,7 @@
 import { UserService } from "./user.service";
-import { IUserControllerContract } from "./user.types";
+import { IUserControllerContract, ICreateOrderInput, Order } from "./user.types";
+import { Request, Response } from 'express';
+
 
 export const userController: IUserControllerContract = {
     registration: async (req, res) => {
@@ -128,11 +130,24 @@ export const userController: IUserControllerContract = {
 
         res.status(200).json(orders);
     },
-    createOrder: async (req, res) => {
-        const userId = res.locals.userId;
-        const body = req.body;
-        const response = await UserService.createOrder(userId, body)
-        res.status(201).json(response)
+    createOrder: async (
+        req: Request<object, Order | string, ICreateOrderInput>, 
+        res: Response<Order | string>
+    ): Promise<void> => {
+        try {
+            const userId = res.locals.userId; 
+            const body = req.body;
+            const response = await UserService.createOrder(userId, body);
+            if (typeof response === "string") {
+                res.status(400).json(response);
+                return;
+            }
+
+            res.status(201).json(response);
+        } catch (error) {
+            console.error("Controller Error:", error);
+            res.status(500).json("Internal Server Error");
+        }
     },
     createAdress: async (req, res) => {
         const userId = res.locals.userId;

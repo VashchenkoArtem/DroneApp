@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { IUserRepositoryContract, UserWithoutPassword } from "./user.types";
+import { Order, Prisma, PrismaClient } from "@prisma/client";
+import { Address, CreateOrder, IUserRepositoryContract, UpdateAddress, UserWithoutPassword } from "./user.types";
 import e from "express";
 
 
@@ -85,17 +85,22 @@ export const UserRepository: IUserRepositoryContract = {
             throw error
         }
     },
-    createAdress: async (data, userId) => {
-        return await client.address.create({
-            data: {
-                city: data.city,
-                street: data.street,
-                numberOfHouse: Number(data.numberOfHouse),
-                numberOfFlat: Number(data.numberOfFlat),
-                entrance: Number(data.entrance),
-                userId: Number(userId)
-            }
-        });
+    createAdress: async (data, userId): Promise<Address | null> => {
+        try {
+            return await client.address.create({
+                data: {
+                    city: data.city,
+                    street: data.street,
+                    numberOfHouse: Number(data.numberOfHouse) || 0,
+                    numberOfFlat: Number(data.numberOfFlat) || 0,
+                    entrance: Number(data.entrance) || 0,
+                    userId: Number(userId)
+                }
+            });
+        } catch (error) {
+            console.error("Error creating address:", error);
+            return null;
+        }
     },
     getUserDeliveries: async (userId) => {
         return await client.address.findMany({
@@ -131,49 +136,37 @@ export const UserRepository: IUserRepositoryContract = {
             throw error;
         }
     },
-    createOrder: async (userId: number, data: any) => {
-        try {
-            const newOrder = await client.order.create({
-                data: {
-                    firstName: data.firstName,
-                    patronymic: data.patronymic,
-                    phoneNumber: data.phoneNumber,
-                    email: data.email,
-                    comment: data.comment,
-                    cityName: data.cityName,
-                    paymentMethod: data.paymentMethod,
-                    userId: userId,
-                    products: {
-                        create: data.products.map((p: { productId: number }) => ({
-                            productId: p.productId
-                        }))
-                    },
-                    addressId: data.addressId,
-                    ttnNumber: data.ttnNumber
-                }
-            });
-            return newOrder;
-        } catch (error) {
-            throw error;
-        }
+    createOrder: async (userId: number, data: CreateOrder): Promise<Order> => {
+        return await client.order.create({
+            data: {
+                ...data,
+                userId: userId,
+                ttnNumber: data.ttnNumber || "PENDING"
+            }
+        });
     },
     deleteAdress: async(adressId) => {
         return await client.address.delete({
             where: { id: Number(adressId) }
         });
     },
-    updateAdress: async (addressId: number, data: any) => {
+    updateAdress: async (addressId: number, data: UpdateAddress): Promise<Address> => {
+        const updateData: Prisma.AddressUpdateInput = {};
+        if (data.city !== undefined) updateData.city = data.city;
+        if (data.street !== undefined) updateData.street = data.street;
+        if (data.numberOfHouse !== undefined) {
+            updateData.numberOfHouse = Number(data.numberOfHouse);
+        }
+        if (data.numberOfFlat !== undefined) {
+            updateData.numberOfFlat = Number(data.numberOfFlat);
+        }
+        if (data.entrance !== undefined) {
+            updateData.entrance = Number(data.entrance);
+        }
+
         return await client.address.update({
-            where: {
-                id: addressId
-            },
-            data: {
-                city: data.city,
-                street: data.street,
-                numberOfHouse: Number(data.numberOfHouse),
-                numberOfFlat: Number(data.numberOfFlat),
-                entrance: Number(data.entrance)
-            }
+            where: { id: addressId },
+            data: updateData
         });
     },
     checkAndResetPassword: async (newHashedPassword, code) => {
