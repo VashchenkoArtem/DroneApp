@@ -53,7 +53,22 @@ export type CreateAddress = Prisma.AddressCreateWithoutUserInput
 export type UpdateAddress = Prisma.AddressUpdateInput
 
 export type Order = Prisma.OrderGetPayload<{}>
-export type CreateOrder = Prisma.OrderUncheckedCreateInput
+export interface CreateOrder {
+    firstName: string;
+    patronymic: string;
+    phoneNumber: string;
+    email: string;
+    cityName: string;
+    paymentMethod: string;
+    deliveryType: string;
+    warehouseRef: string;
+    ttnNumber?: string;
+
+    products: {
+        productId: number;
+        quantity: number;
+    }[];
+}
 
 export type passwordForm = {
     password: string
@@ -61,22 +76,24 @@ export type passwordForm = {
 
 
 
+export interface ICreateOrderProduct {
+  productId: number;
+  count: number;
+}
+
 export interface ICreateOrderInput {
   firstName: string;
   patronymic: string;
   phoneNumber: string;
   email: string;
-  comment?: string;
   cityName: string;
   paymentMethod: string;
-  warehouseName?: string;
-  street?: string;
-  products: { productId: number }[];
-  addressId?: number;
-  ttnNumber?: string;
-  deliveryType: string
+  deliveryType?: string;
+  warehouseRef?: string;
+  warehouseDescription?: string;
+  comment?: string;
+  products: ICreateOrderProduct[]
 }
-
 
 export interface IUserControllerContract {
     registration: (

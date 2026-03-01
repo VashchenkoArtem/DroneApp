@@ -139,9 +139,29 @@ export const UserRepository: IUserRepositoryContract = {
     createOrder: async (userId: number, data: CreateOrder): Promise<Order> => {
         return await client.order.create({
             data: {
-                ...data,
+                firstName: data.firstName,
+                patronymic: data.patronymic,
+                phoneNumber: data.phoneNumber,
+                email: data.email,
+                cityName: data.cityName,
+                paymentMethod: data.paymentMethod,
+                deliveryType: data.deliveryType,
+                warehouseRef: data.warehouseRef,
+
                 userId: userId,
-                ttnNumber: data.ttnNumber || "PENDING"
+                ttnNumber: data.ttnNumber || "PENDING",
+
+                products: {
+                    create: data.products.map(item => ({
+                        product: {
+                            connect: { id: item.productId }
+                        },
+                        quantity: item.quantity
+                    }))
+                }
+            },
+            include: {
+                products: true
             }
         });
     },

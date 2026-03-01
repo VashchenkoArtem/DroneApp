@@ -132,7 +132,7 @@ export const UserService: IUserServiceContract = {
                 const newAddress = await tx.address.create({
                     data: {
                         city: data.cityName,
-                        street: data.street || "Не вказано",
+                        street: data.warehouseDescription || "Не вказано",
                         numberOfHouse: 0, 
                         numberOfFlat: 0,
                         entrance: 0,
@@ -152,16 +152,17 @@ export const UserService: IUserServiceContract = {
                         addressId: newAddress.id,
                         ttnNumber: "SHPL3469727607",
                         deliveryType: "NovaPoshta",
-                        warehouseRef: data.warehouseName || "",
-                        warehouseDescription: data.warehouseName || ""
+                        warehouseRef: data.warehouseRef || "",
+                        warehouseDescription: data.warehouseDescription || ""
                     }
                 });
                 for (const item of data.products) {
                     await tx.productOnOrder.create({
-                        data: {
-                            productId: item.productId,
-                            blockId: order.id
-                        }
+                    data: {
+                        product: { connect: { id: item.productId } }, 
+                        order: { connect: { id: order.id } },
+                        count: item.count  
+                    }
                     });
                 }
 
