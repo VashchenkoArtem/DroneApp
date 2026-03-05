@@ -78,7 +78,7 @@ export type passwordForm = {
 
 export interface ICreateOrderProduct {
   productId: number;
-  count: number;
+  quantity: number;
 }
 
 export interface ICreateOrderInput {
@@ -194,7 +194,6 @@ export interface IUserRepositoryContract {
     getUserDeliveries: (userId: number) => Promise<Address[]>
     getUserDeliveryById: (addressId: number) => Promise<Address | null>
     getUserOrders: (userId: number) => Promise<Order[]>
-    createOrder: (userId: number, data: CreateOrder) => Promise<Order>;
     checkAndResetPassword: (newHashedPassword: string, code: number) => Promise<void>
     sendCodeToEmail: (data: {email: string}, code: number) => Promise<void>
     updateAdress: (addressId: number, data: UpdateAddress) => Promise<Address>;

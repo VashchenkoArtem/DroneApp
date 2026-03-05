@@ -156,15 +156,14 @@ export const UserService: IUserServiceContract = {
                         warehouseDescription: data.warehouseDescription || ""
                     }
                 });
-                for (const item of data.products) {
-                    await tx.productOnOrder.create({
-                    data: {
-                        product: { connect: { id: item.productId } }, 
-                        order: { connect: { id: order.id } },
-                        count: item.count  
-                    }
-                    });
-                }
+                console.log(data.products)
+                await tx.productOnOrder.createMany({
+                    data: data.products.map(item => ({
+                        productId: item.productId,
+                        blockId: order.id,
+                        count: item.quantity
+                    }))
+                });
 
                 return order;
             });
