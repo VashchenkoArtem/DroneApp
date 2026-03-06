@@ -125,6 +125,7 @@ model Order{
   deliveryType       String?
   warehouseRef       String?
   warehouseDescription String?
+  status String @default("Оформлення")
 }
 
 model ProductSpecifications {

@@ -14,9 +14,10 @@ router.patch("/users/addresses/:addressId", userController.updateAdress);
 router.get("/users/addresses/:userId", userController.getUserDeliveries);
 router.get('/users/addresses/single/:addressId', userController.getUserDeliveryById);
 router.get("/users/orders", authMiddleware, userController.getUserOrders);
-router.post("/users/orders", authMiddleware, userController.createOrder)
+router.post("/users/orders", authMiddleware, userController.createOrder);
 router.post("/users/contacts", userController.sendContactMessage);
 router.post("/users/send-code", userController.sendCodeToEmail);
 router.post("/users/recovery-password", userController.checkAndResetPassword);
+router.patch("/users/orders/:orderId", authMiddleware, userController.updateOrder)
 
 export default router;

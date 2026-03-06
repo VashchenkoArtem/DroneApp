@@ -162,9 +162,14 @@ export const userController: IUserControllerContract = {
     },
     checkAndResetPassword: async (req, res) => {
         const codeFromEmail = req.query.code;
-        console.log(codeFromEmail, "code")
         const body = req.body
         const response = await UserService.checkAndResetPassword(body, codeFromEmail)
+        res.status(200).json(response)
+    },
+    updateOrder: async (req, res) => {
+        const body = req.body
+        const orderId = req.params.orderId
+        const response = await UserService.updateOrder(body, Number(orderId))
         res.status(200).json(response)
     }
 };

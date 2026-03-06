@@ -204,5 +204,12 @@ export const UserService: IUserServiceContract = {
         const hashedPassword = await hash(data.password, 10);
         await UserRepository.checkAndResetPassword(hashedPassword, Number(codeFromEmail));
         return "Password has been successfully updated.";
+    },
+    updateOrder: async (data, orderId) => { 
+        const response = await UserRepository.updateOrder(data, orderId)
+        if (!response){
+            return "Order not found"
+        }
+        return response
     }
 };

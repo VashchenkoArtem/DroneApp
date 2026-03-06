@@ -203,5 +203,21 @@ export const UserRepository: IUserRepositoryContract = {
         }catch(error){
             console.log(error)
         }
+    },
+    updateOrder: async (data, orderId) => {
+        try{
+            const updatedOrder = await client.order.update({
+                where: {
+                    id: orderId
+                },
+                data: {
+                    status: data.status
+                }
+            })
+            return updatedOrder
+        }catch(error){
+            console.log(error)
+            throw new Error("Order dont update")
+        }
     }
 }

@@ -94,7 +94,7 @@ export interface ICreateOrderInput {
   comment?: string;
   products: ICreateOrderProduct[]
 }
-
+export type IUpdateOrderInput = Prisma.OrderUncheckedUpdateInput
 export interface IUserControllerContract {
     registration: (
         // {message: string}
@@ -162,6 +162,10 @@ export interface IUserControllerContract {
         req: Request<object, string, passwordForm, {code: string}>,
         res: Response<string>
     ) => void,
+    updateOrder: (
+        req: Request<{orderId: string}, Order | string, {status: string}>,
+        res: Response<Order | string>
+    ) => void
 }
   
 
@@ -182,6 +186,7 @@ export interface IUserServiceContract {
     createOrder: (userId: number, data: ICreateOrderInput) => Promise<Order | string>;
     sendCodeToEmail: (data: {email: string}) => Promise<string>
     checkAndResetPassword: (data: passwordForm,codeFromEmail: string) => Promise<string>
+    updateOrder: (data: {status: string}, orderId: number) => Promise<Order | string>
 }
 
 export interface IUserRepositoryContract {
@@ -197,4 +202,5 @@ export interface IUserRepositoryContract {
     checkAndResetPassword: (newHashedPassword: string, code: number) => Promise<void>
     sendCodeToEmail: (data: {email: string}, code: number) => Promise<void>
     updateAdress: (addressId: number, data: UpdateAddress) => Promise<Address>;
+    updateOrder: (data: {status: string}, orderId: number) => Promise<Order>
 }
